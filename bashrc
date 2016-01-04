@@ -34,7 +34,7 @@ do_alias "diff" "colordiff"
 alias grep='grep --color=auto'
 alias hgrep='history | grep'
 alias dmesg='dmesg -H'
-
+alias proc='ps -ef | grep'
 do_alias "pbcopy" "xclip -selection c"
 alias gimme='sudo apt-get install'
 alias remove='sudo apt-get remove'
