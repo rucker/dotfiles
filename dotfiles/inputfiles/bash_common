@@ -1,4 +1,8 @@
 
+for s in "$scriptsDir"*; do
+  source "$s"
+done
+
 goToFirstCol="\[\033[G\]"
 green_bold="\[\033[1;32m\]"
 blue_bold="\[\033[1;34m\]"
@@ -8,14 +12,13 @@ default="\[\033[00m\]"
 timestamp="[\D{%Y-%m-%d} \t]"
 
 PS1="$goToFirstCol$yellow_light$timestamp $green_bold\u@\h$blue_bold \w"
-if [ -f ~/code/scripts/git-prompt.sh ]; then
-  source ~/code/scripts/git-prompt.sh
+if [[ $(type -t __git_ps1) == 'function' ]]; then
   PS1=$PS1"$magenta_bold$(__git_ps1)"
 fi
 export PS1=$PS1"$blue_bold\n\$$default "
 
 do_alias() {
-  if [ "$(which $2)" != "" ]; then
+  if [[ "$(which $2)" != "" ]]; then
     alias "$1"="$2"
   fi
 }
