@@ -25,22 +25,22 @@ do_alias() {
 
 umask 022
 
-export LS_OPTIONS='-h --color=auto --group-directories-first'
+export LS_OPTIONS="-h --color=auto --group-directories-first"
  
-alias ls='ls $LS_OPTIONS'
-alias ll='ls $LS_OPTIONS -l'
-alias l='ls $LS_OPTIONS -lA'
+alias ls="ls $LS_OPTIONS"
+alias ll="ls $LS_OPTIONS -l"
+alias l="ls $LS_OPTIONS -lA"
 do_alias "diff" "colordiff"
-alias grep='grep --color=auto'
-alias hgrep='history | grep'
-alias dmesg='dmesg -H'
-alias proc='ps -ef | grep'
+alias grep="grep --color=auto"
+alias hgrep="history | grep"
+alias dmesg="dmesg -H"
+alias proc="ps -ef | grep"
 export GRAILS_HOME=~/.gvm/grails/current
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$GRAILS_HOME/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 eval `dircolors`
-alias htop='sudo htop'
+alias htop="sudo htop"
 if [ -f ~/.sdkman/bin/sdkman-init.sh ]; then
   source ~/.sdkman/bin/sdkman-init.sh
 fi

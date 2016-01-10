@@ -25,17 +25,17 @@ do_alias() {
 
 umask 022
 
-export LS_OPTIONS='-h --color=auto --group-directories-first'
+export LS_OPTIONS="-h --color=auto --group-directories-first"
  
-alias ls='ls $LS_OPTIONS'
-alias ll='ls $LS_OPTIONS -l'
-alias l='ls $LS_OPTIONS -lA'
+alias ls="ls $LS_OPTIONS"
+alias ll="ls $LS_OPTIONS -l"
+alias l="ls $LS_OPTIONS -lA"
 do_alias "diff" "colordiff"
-alias grep='grep --color=auto'
-alias hgrep='history | grep'
-alias dmesg='dmesg -H'
-alias proc='ps -ef | grep'
+alias grep="grep --color=auto"
+alias hgrep="history | grep"
+alias dmesg="dmesg -H"
+alias proc="ps -ef | grep"
 do_alias "pbcopy" "xclip -selection c"
-alias gimme='sudo apt-get install'
-alias remove='sudo apt-get remove'
+alias gimme="sudo apt-get install"
+alias remove="sudo apt-get remove"
 eval `dircolors`
