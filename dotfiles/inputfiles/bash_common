@@ -1,7 +1,14 @@
+__doAlias() {
+  if [[ "$(which $2)" != "" ]]; then
+    alias "$1"="$2"
+  fi
+}
 
-for s in "$scriptsDir"*; do
-  source "$s"
-done
+__sourceInDir() {
+  for s in $1*; do
+    source $s
+  done
+}
 
 goToFirstCol="\[\033[G\]"
 green_bold="\[\033[1;32m\]"
@@ -17,12 +24,6 @@ if [[ $(type -t __git_ps1) == 'function' ]]; then
 fi
 export PS1=$PS1"$blue_bold\n\$$default "
 
-do_alias() {
-  if [[ "$(which $2)" != "" ]]; then
-    alias "$1"="$2"
-  fi
-}
-
 umask 022
 
 export LS_OPTIONS="-h --color=auto --group-directories-first"
@@ -30,7 +31,7 @@ export LS_OPTIONS="-h --color=auto --group-directories-first"
 alias ls="ls $LS_OPTIONS"
 alias ll="ls $LS_OPTIONS -l"
 alias l="ls $LS_OPTIONS -lA"
-do_alias "diff" "colordiff"
+__doAlias "diff" "colordiff"
 alias grep="grep --color=auto"
 alias hgrep="history | grep"
 alias dmesg="dmesg -H"
