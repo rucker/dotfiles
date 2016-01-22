@@ -50,6 +50,4 @@ export PATH="~/bin:/usr/local/opt/coreutils/libexec/gnubin:$GRAILS_HOME/bin:$PAT
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 eval `dircolors`
 alias htop="sudo htop"
-if [ -f ~/.sdkman/bin/sdkman-init.sh ]; then
-  source ~/.sdkman/bin/sdkman-init.sh
-fi
+alias psgrep="psgrep -i"
