@@ -4,7 +4,9 @@
 
 __doAlias() {
   for prog in $(echo $2 | tr " " "\n"); do
-    if [[ "$(which $prog)" == "" ]]; then
+    if [[ $prog == -* ]]; then
+      continue
+    elif [[ "$(which $prog)" == "" ]]; then
       return
     fi
   done
