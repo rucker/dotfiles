@@ -41,7 +41,6 @@ alias l="ls $LS_OPTIONS -lA"
 alias grep="grep --color=auto"
 alias hgrep="history | grep"
 alias dmesg="dmesg -T --color=always"
-alias proc="ps -ef | grep"
 __doAlias "diff" "colordiff"
 __doAlias "cat" "grc cat"
 export GRAILS_HOME=~/.gvm/grails/current
