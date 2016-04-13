@@ -2,7 +2,8 @@ set number
 syntax on
 set ruler
 set ls=2			" always show status line
-set sw=2
+set sw=2			" shift width spaces
+set ts=2			" tab stop spaces
 imap jj <Esc>			" always avoid escape key!
 set showmatch			" match braces/parenthesis
 set hlsearch			" highlight search match
