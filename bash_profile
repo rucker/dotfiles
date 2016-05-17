@@ -46,6 +46,10 @@ alias l="ls $LS_OPTIONS -lA"
 alias grep="grep --color=auto"
 alias hgrep="history | grep"
 alias dmesg="dmesg -T --color=always"
+alias pull="git pull"
+alias co="git checkout"
+alias st="git st"
+alias lg="git lg"
 __doAlias "diff" "colordiff"
 __doAlias "cat" "grc cat"
 export GRAILS_HOME=~/.gvm/grails/current
@@ -55,3 +59,5 @@ export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 eval `dircolors`
 alias htop="sudo htop"
 alias psgrep="psgrep -i"
+alias setjdk7='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
+alias setjdk8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
