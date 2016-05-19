@@ -17,6 +17,9 @@ __sourceInDir() {
   fi
 }
 
+__sourceInDir $scriptsDir"sourced/"
+__sourceInDir $scriptsDir"sourced-private/"
+
 goToFirstCol="\[\033[G\]"
 green_bold="\[\033[1;32m\]"
 blue_bold="\[\033[1;34m\]"
