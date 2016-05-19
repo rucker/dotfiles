@@ -27,7 +27,7 @@ timestamp="[\D{%Y-%m-%d} \t]"
 
 PS1="$goToFirstCol$yellow_light$timestamp $green_bold\u@\h$blue_bold \w"
 if [[ $(type -t __git_ps1) == 'function' ]]; then
-  PS1=$PS1"$magenta_bold$(__git_ps1 " (%s)")"
+  PS1=$PS1"$magenta_bold\$(__git_ps1)"
 fi
 export PS1=$PS1"$blue_bold\n\$$default "
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
