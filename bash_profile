@@ -57,9 +57,8 @@ alias st="git st"
 alias lg="git lg -10"
 __doAlias "diff" "colordiff"
 __doAlias "cat" "grc cat"
-export GRAILS_HOME=~/.gvm/grails/current
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/
-export PATH="~/bin:/usr/local/opt/coreutils/libexec/gnubin:$GRAILS_HOME/bin:~/Library/Android/sdk/platform-tools:/opt/local/bin:/opt/local/sbin:$PATH"
+export PATH="~/bin:/usr/local/opt/coreutils/libexec/gnubin:~/Library/Android/sdk/platform-tools:/opt/local/bin:/opt/local/sbin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 eval `dircolors`
 alias htop="sudo htop"
