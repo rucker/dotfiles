@@ -6,6 +6,7 @@
         co = checkout
         st = status
         br = branch
+        rbi = rebase -i
 [push]
 	default = simple
 [pull]

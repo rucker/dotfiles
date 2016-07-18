@@ -55,6 +55,7 @@ alias pull="git pull"
 alias co="git checkout"
 alias st="git st"
 alias lg="git lg -10"
+alias rbi="git rebase -i"
 __doAlias "diff" "colordiff"
 __doAlias "cat" "grc cat"
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/
