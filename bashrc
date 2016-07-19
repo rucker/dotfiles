@@ -16,7 +16,7 @@ __doAlias() {
 }
 
 __sourceInDir() {
-  if [[ -d $1 ]]; then
+  if [[ -d $1 && "$(ls -A $1)" ]]; then
     for s in $1*; do
       source $s
     done
