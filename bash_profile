@@ -58,11 +58,6 @@ alias lg="git lg -10"
 alias rbi="git rebase -i"
 __doAlias "diff" "colordiff"
 __doAlias "cat" "grc cat"
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/
-export PATH="~/bin:/usr/local/opt/coreutils/libexec/gnubin:~/Library/Android/sdk/platform-tools:/opt/local/bin:/opt/local/sbin:$PATH"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 eval `dircolors`
 alias htop="sudo htop"
 alias psgrep="psgrep -i"
-alias setjdk7='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
-alias setjdk8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
