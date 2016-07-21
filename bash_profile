@@ -58,6 +58,5 @@ alias lg="git lg -10"
 alias rbi="git rebase -i"
 __doAlias "diff" "colordiff"
 __doAlias "cat" "grc cat"
-eval `dircolors`
 alias htop="sudo htop"
 alias psgrep="psgrep -i"
