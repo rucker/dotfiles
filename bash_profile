@@ -43,11 +43,6 @@ export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 umask 022
 
-export LS_OPTIONS="-h --color=auto --group-directories-first"
- 
-alias ls="ls $LS_OPTIONS"
-alias ll="ls $LS_OPTIONS -l"
-alias l="ls $LS_OPTIONS -lA"
 alias grep="grep --color=auto"
 alias hgrep="history | grep"
 alias dmesg="dmesg -T --color=always"
@@ -58,6 +53,14 @@ alias lg="git lg -10"
 alias rbi="git rebase -i"
 __doAlias "diff" "colordiff"
 __doAlias "cat" "grc cat"
+export PATH="~/bin:/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:$PATH"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
 eval `dircolors`
 alias htop="sudo htop"
 alias psgrep="psgrep -i"
+
+export LS_OPTIONS="-h --color=auto --group-directories-first"
+alias ls="ls $LS_OPTIONS"
+alias ll="ls $LS_OPTIONS -l"
+alias l="ls $LS_OPTIONS -lA"

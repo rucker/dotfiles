@@ -43,11 +43,6 @@ export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 umask 022
 
-export LS_OPTIONS="-h --color=auto --group-directories-first"
- 
-alias ls="ls $LS_OPTIONS"
-alias ll="ls $LS_OPTIONS -l"
-alias l="ls $LS_OPTIONS -lA"
 alias grep="grep --color=auto"
 alias hgrep="history | grep"
 alias dmesg="dmesg -T --color=always"
@@ -63,3 +58,8 @@ alias gimme="sudo apt-get install"
 alias remove="sudo apt-get remove"
 alias psgrep="ps -ef | grep"
 eval `dircolors`
+
+export LS_OPTIONS="-h --color=auto --group-directories-first"
+alias ls="ls $LS_OPTIONS"
+alias ll="ls $LS_OPTIONS -l"
+alias l="ls $LS_OPTIONS -lA"
