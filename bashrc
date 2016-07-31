@@ -62,3 +62,4 @@ __doAlias "pbcopy" "xclip -selection c"
 alias gimme="sudo apt-get install"
 alias remove="sudo apt-get remove"
 alias psgrep="ps -ef | grep"
+eval `dircolors`

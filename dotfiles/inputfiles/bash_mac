@@ -1,2 +1,3 @@
+eval `dircolors`
 alias htop="sudo htop"
 alias psgrep="psgrep -i"
