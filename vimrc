@@ -1,6 +1,7 @@
 set number
 syntax on
 set ruler
+set autoread		" reload file when modified on disk
 set ls=2			" always show status line
 set sw=4			" shift width spaces
 set ts=4			" tab stop spaces
