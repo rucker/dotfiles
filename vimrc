@@ -27,18 +27,18 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-set number
 syntax on
+highlight LineNr ctermfg=red	" change color of line numbering so it’s different than code font color
+set number
 set ruler
-set autoread		" reload file when modified on disk
-set ls=2			" always show status line
-set sw=4			" shift width spaces
-set ts=4			" tab stop spaces
+set autoread					" reload file when modified on disk
+set ls=2						" always show status line
+set sw=4						" shift width spaces
+set ts=4						" tab stop spaces
 set expandtab
-imap jj <Esc>			" always avoid escape key!
-set showmatch			" match braces/parenthesis
-set hlsearch			" highlight search match
+set showmatch					" match braces/parenthesis
+set hlsearch					" highlight search match
+set wildmenu					" horizontal menu for file autocomplete
 nnoremap <C-L> :nohlsearch<CR> 	" toggle off highlighting from search matches
 vnoremap // y/<C-R>"<CR>		" search for visual selection with //
-set wildmenu			" horizontal menu for file autocomplete
-highlight LineNr ctermfg=red	" changes color of line numbering so it’s different than code font color
+imap jj <Esc>					" always avoid escape key!
