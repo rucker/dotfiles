@@ -41,10 +41,17 @@ set hlsearch					" highlight search match
 set wildmenu					" horizontal menu for file autocomplete
 set splitright
 set splitbelow
-nnoremap <C-L> :nohlsearch<CR> 	" toggle off highlighting from search matches
-nnoremap <C-J> <C-W><C-J>		" use ctrl+hjkl to navigate windows
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-vnoremap // y/<C-R>"<CR>		" search for visual selection with //
-imap jj <Esc>					" always avoid escape key!
+vnoremap // y/<c-r>"<cr>		" search for visual selection with //
+imap jj <esc>					" always avoid escape key!
+nmap <silent> <leader>n :set hlsearch!<CR>" toggle highlighting from search matches
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+nnoremap <space> za				" enable folding with the spacebar
+
+" use ctrl+hjkl to navigate windows
+nnoremap <c-j> <c-w><c-j>
+nnoremap <c-k> <c-w><c-k>
+nnoremap <c-l> <c-w><c-l>
+nnoremap <c-h> <c-w><c-h>
