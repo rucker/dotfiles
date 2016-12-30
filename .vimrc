@@ -28,7 +28,7 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 syntax on
-highlight LineNr ctermfg=red	" change color of line numbering so it’s different than code font color
+highlight LineNr ctermfg=red	" change color of line numbering so it's different than code font color
 set number
 set ruler
 set autoread					" reload file when modified on disk
