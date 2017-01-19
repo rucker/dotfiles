@@ -35,8 +35,8 @@ man() {
             man "$@"
 }
 
-__sourceInDir $scriptsDir"sourced/"
-__sourceInDir $scriptsDir"sourced-private/"
+__sourceInDir $scriptsDir"/sourced/"
+__sourceInDir $scriptsDir"/sourced-local/"
 
 goToFirstCol="\[\033[G\]"
 green_bold="\[\033[1;32m\]"
