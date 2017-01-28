@@ -57,12 +57,14 @@ umask 022
 
 alias grep="grep --color=auto"
 alias hgrep="history | grep"
+alias psgrep="ps -ef | grep -v grep | grep"
 alias dmesg="dmesg -T --color=always"
 alias pull="git pull"
 alias co="git checkout"
 alias st="git st"
 alias lg="git lg -25"
 alias rbi="git rebase -i"
+alias gd="git diff"
 __doAlias "diff" "colordiff"
 __doAlias "cat" "grc cat"
 export PATH="~/bin:/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:$PATH"
@@ -70,7 +72,6 @@ export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 eval `dircolors`
 alias htop="sudo htop"
-alias psgrep="psgrep -i"
 
 export LS_OPTIONS="-h --color=auto --group-directories-first"
 alias ls="ls $LS_OPTIONS"
