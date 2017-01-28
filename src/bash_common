@@ -29,6 +29,10 @@ man() {
             man "$@"
 }
 
+__runningInDocker() {
+    awk -F/ '$2 == "docker"' /proc/self/cgroup | read
+}
+
 __sourceInDir $scriptsDir"/sourced/"
 __sourceInDir $scriptsDir"/sourced-local/"
 
@@ -39,8 +43,11 @@ magenta_bold="\[\033[1;35m\]"
 yellow_light="\[\033[0;33m\]"
 default="\[\033[00m\]"
 timestamp="[\D{%Y-%m-%d} \t]"
+hostname="\h"
 
-PS1="$goToFirstCol$yellow_light$timestamp $green_bold\u@\h$blue_bold \w"
+! `__runningInDocker` || hostname="docker"
+
+PS1="$goToFirstCol$yellow_light$timestamp $green_bold\u@$hostname$blue_bold \w"
 if [[ $(type -t __git_ps1) == 'function' ]]; then
   PS1=$PS1"$magenta_bold\$(__git_ps1)"
 fi
