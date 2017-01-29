@@ -1,4 +1,4 @@
-__doAlias "pbcopy" "xclip -selection c"
+__do_alias "pbcopy" "xclip -selection c"
 alias gimme="sudo apt-get install"
 alias remove="sudo apt-get remove"
 eval `dircolors`

@@ -4,7 +4,7 @@
 
 scriptsDir="/Users/rick/code/dotfiles/dotfiles/scripts/"
 
-__doAlias() {
+__do_alias() {
   for prog in $(echo $2 | tr " " "\n"); do
     if [[ $prog == -* ]]; then
       continue
@@ -15,12 +15,16 @@ __doAlias() {
   alias "$1"="$2"
 }
 
-__sourceInDir() {
+__source_in_dir() {
   if [[ -d $1 && "$(ls -A $1)" ]]; then
     for s in $1*; do
       source $s
     done
   fi
+}
+
+__running_in_docker() {
+    awk -F/ '$2 == "docker"' /proc/self/cgroup | read
 }
 
 man() {
@@ -35,29 +39,24 @@ man() {
             man "$@"
 }
 
-__runningInDocker() {
-    awk -F/ '$2 == "docker"' /proc/self/cgroup | read
-}
-
 __sourceInDir $scriptsDir"/sourced/"
 __sourceInDir $scriptsDir"/sourced-local/"
 
-goToFirstCol="\[\033[G\]"
-green_bold="\[\033[1;32m\]"
-blue_bold="\[\033[1;34m\]"
-magenta_bold="\[\033[1;35m\]"
-yellow_light="\[\033[0;33m\]"
-default="\[\033[00m\]"
-timestamp="[\D{%Y-%m-%d} \t]"
-hostname="\h"
+GO_TO_FIRST_COL="\[\033[G\]"
+GREEN_BOLD="\[\033[1;32m\]"
+BLUE_BOLD="\[\033[1;34m\]"
+MAGENTA_BOLD="\[\033[1;35m\]"
+YELLOW="\[\033[0;33m\]"
+DEFAULT_COLOR="\[\033[00m\]"
+TIMESTAMP="[\D{%Y-%m-%d} \t]"
 
-! `__runningInDocker` || hostname="docker"
+`__running_in_docker` && hostname="docker" || hostname="\h"
 
-PS1="$goToFirstCol$yellow_light$timestamp $green_bold\u@$hostname$blue_bold \w"
+PS1="$GO_TO_FIRST_COL$YELLOW$TIMESTAMP $GREEN_BOLD\u@$hostname$BLUE_BOLD \w"
 if [[ $(type -t __git_ps1) == 'function' ]]; then
-  PS1=$PS1"$magenta_bold\$(__git_ps1)"
+  PS1=$PS1"$MAGENTA_BOLD\$(__git_ps1)"
 fi
-export PS1=$PS1"$blue_bold\n\$$default "
+export PS1=$PS1"$BLUE_BOLD\n\$$DEFAULT_COLOR "
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 umask 022
@@ -72,8 +71,8 @@ alias st="git st"
 alias lg="git lg -25"
 alias rbi="git rebase -i"
 alias gd="git diff"
-__doAlias "diff" "colordiff"
-__doAlias "cat" "grc cat"
+__do_alias "diff" "colordiff"
+__do_alias "cat" "grc cat"
 export PATH="~/bin:/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
