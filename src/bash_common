@@ -33,10 +33,6 @@ man() {
             man "$@"
 }
 
-__sourceInDir $scriptsDir"/sourced/"
-__sourceInDir $scriptsDir"/sourced-local/"
-
-
 GO_TO_FIRST_COL="\[\033[G\]"
 GREEN_BOLD="\[\033[1;32m\]"
 BLUE_BOLD="\[\033[1;34m\]"
