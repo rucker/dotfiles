@@ -18,7 +18,9 @@ __source_in_dir() {
 }
 
 __running_in_docker() {
-    awk -F/ '$2 == "docker"' /proc/self/cgroup | read
+    if [[ -d /proc ]]; then
+        awk -F/ '$2 == "docker"' /proc/self/cgroup | read
+    fi
 }
 
 __build_ps1() {
