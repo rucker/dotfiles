@@ -1,5 +1,4 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -28,14 +27,12 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 syntax on
+filetype on
 highlight LineNr ctermfg=red	" change color of line numbering so it's different than code font color
 set number
 set ruler
 set autoread					" reload file when modified on disk
 set ls=2						" always show status line
-set sw=4						" shift width spaces
-set ts=4						" tab stop spaces
-set expandtab
 set showmatch					" match braces/parenthesis
 set hlsearch					" highlight search match
 set wildmenu					" horizontal menu for file autocomplete
@@ -56,14 +53,20 @@ nnoremap <c-k> <c-w><c-k>
 nnoremap <c-l> <c-w><c-l>
 nnoremap <c-h> <c-w><c-h>
 
-au BufNewFile,BufRead *.py
+function SetTabs()
+    if &filetype == 'make' || &filetype == 'gitconfig'
+        set shiftwidth=8 tabstop=8 noexpandtab
+    else
+        set shiftwidth=4 tabstop=4 expandtab
+    endif
+endfunction
+
+autocmd BufEnter *.py
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
-    \ set textwidth=79 |
-    \ set expandtab |
     \ set autoindent |
     \ set fileformat=unix |
+    \ call SetTabs() |
 
-au BufNewFile,BufRead Makefile*,*.mk
-\ set noexpandtab |
+autocmd BufEnter * call SetTabs()
