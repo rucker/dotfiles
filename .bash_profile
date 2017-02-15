@@ -73,6 +73,8 @@ alias rbi="git rebase -i"
 alias gd="git diff"
 __do_alias "diff" "colordiff"
 __do_alias "cat" "grc cat"
+
+set -o vi
 export PATH="~/bin:/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 

@@ -73,6 +73,8 @@ alias rbi="git rebase -i"
 alias gd="git diff"
 __do_alias "diff" "colordiff"
 __do_alias "cat" "grc cat"
+
+set -o vi
 __do_alias "pbcopy" "xclip -selection c"
 alias gimme="sudo apt-get install"
 alias remove="sudo apt-get remove"

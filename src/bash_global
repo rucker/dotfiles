@@ -69,3 +69,5 @@ alias rbi="git rebase -i"
 alias gd="git diff"
 __do_alias "diff" "colordiff"
 __do_alias "cat" "grc cat"
+
+set -o vi
