@@ -1,13 +1,20 @@
 #!/bin/bash
 
-DIR="$(dirname $([ -L $0 ] && readlink -f $0 || echo $0))"
+SCRIPT_DIR="$(dirname $([ -L $0 ] && readlink -f $0 || echo $0))"
 
-dfm -i "$DIR/src" "$@"
+DFM=~/bin/dfm
+DFM_SCRIPT=$(readlink $DFM)
+if [[ -z $DFM_SCRIPT ]]; then
+    echo dfm not found on '$PATH'.
+    exit 1
+fi
+
+$DFM_SCRIPT -i "$SCRIPT_DIR/src" "$@"
 if [[ $# -eq 0 ]]; then
-    dfm -i "$DIR/src" --no-local -o $DIR 1>/dev/null
-    if [[ `uname` == "Darwin" ]]; then
-        dfm -i "$DIR/src" -f bashrc --no-local -o $DIR 1>/dev/null
+    $DFM_SCRIPT -i "$SCRIPT_DIR/src" --no-local -o $SCRIPT_DIR 1>/dev/null
+    if [[ $(uname) == "Darwin" ]]; then
+        $DFM_SCRIPT -i "$SCRIPT_DIR/src" -f bashrc --no-local -o $SCRIPT_DIR 1>/dev/null
     else
-        dfm -i "$DIR/src" -f bash_profile --no-local -o $DIR 1>/dev/null
+        $DFM_SCRIPT -i "$SCRIPT_DIR/src" -f bash_profile --no-local -o $SCRIPT_DIR 1>/dev/null
     fi
 fi
