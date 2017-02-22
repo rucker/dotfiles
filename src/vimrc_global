@@ -38,6 +38,7 @@ set hlsearch					" highlight search match
 set wildmenu					" horizontal menu for file autocomplete
 set splitright
 set splitbelow
+set backspace=indent,eol,start
 vnoremap // y/<c-r>"<cr>		" search for visual selection with //
 imap jj <esc>					" always avoid escape key!
 nmap <silent> <leader>n :set hlsearch!<CR>" toggle highlighting from search matches
