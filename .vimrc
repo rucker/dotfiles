@@ -1,5 +1,10 @@
 set nocompatible              " be iMproved, required
 
+if !isdirectory(expand("~/.vim/bundle/Vundle.vim"))
+    silent !echo "Vundle is not installed. Installing Vundle..."
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/Vundle.vim
+endif
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
