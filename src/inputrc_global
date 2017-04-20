@@ -6,4 +6,5 @@ $if mode=vi
     Control-l: clear-screen
     set keymap vi-insert
     Control-l: clear-screen
+    "jj": vi-movement-mode
 $endif
