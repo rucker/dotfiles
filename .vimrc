@@ -77,4 +77,7 @@ autocmd BufEnter *.py
     \ set fileformat=unix |
     \ call SetTabs() |
 
+autocmd BufEnter Jenkinsfile
+    \ set syntax=groovy |
+
 autocmd BufEnter * call SetTabs()
