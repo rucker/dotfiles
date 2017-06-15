@@ -58,7 +58,9 @@ set backspace=indent,eol,start
 set shell=bash\ --login
 vnoremap // y/<c-r>"<cr>		" search for visual selection with //
 imap jj <esc>					" always avoid escape key!
-nmap <silent> <leader>n :set hlsearch!<CR>" toggle highlighting from search matches
+" toggle highlighting from search matches
+let hlstate = 0
+nmap <silent> <leader>n :if (hlstate == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=1-hlstate<cr>
 
 " Enable folding
 set foldmethod=indent
@@ -87,7 +89,7 @@ autocmd BufEnter *.py
     \ set fileformat=unix |
     \ call SetTabs() |
 
-autocmd BufEnter Jenkinsfile
+autocmd BufEnter Jenkinsfile*
     \ set syntax=groovy |
 
 autocmd BufEnter * call SetTabs()
