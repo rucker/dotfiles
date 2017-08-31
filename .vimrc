@@ -84,12 +84,8 @@ function SetTabs()
 endfunction
 
 autocmd BufEnter *.py
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
     \ set autoindent |
     \ set fileformat=unix |
-    \ call SetTabs() |
 
 autocmd BufEnter Jenkinsfile*
     \ set syntax=groovy |
