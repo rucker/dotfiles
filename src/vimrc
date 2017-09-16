@@ -16,6 +16,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'pearofducks/ansible-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -76,7 +77,7 @@ nnoremap <c-h> <c-w><c-h>
 function SetTabs()
     if &filetype == 'make' || &filetype == 'gitconfig'
         set shiftwidth=8 tabstop=8 noexpandtab
-    elseif &filetype == 'ruby' || &filetype == 'sh'
+    elseif &filetype == 'ruby' || &filetype == 'sh' || &filetype == 'ansible'
         set shiftwidth=2 tabstop=2 expandtab
     else
         set shiftwidth=4 tabstop=4 expandtab
@@ -89,5 +90,8 @@ autocmd BufEnter *.py
 
 autocmd BufEnter Jenkinsfile*
     \ set syntax=groovy |
+
+autocmd BufEnter */playbooks/*.yml
+    \ set filetype=ansible
 
 autocmd BufEnter * call SetTabs()
