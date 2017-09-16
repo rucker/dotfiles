@@ -14,7 +14,7 @@ main() {
     echo Updates complete. Running dfm
     echo
 
-    run_dfm
+    run_dfm "$@"
 }
 
 update_repo() {
@@ -42,4 +42,4 @@ run_dfm() {
     fi
 }
 
-main
+main "$@"
