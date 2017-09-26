@@ -60,13 +60,16 @@ man() {
             man "$@"
 }
 
+psgrep() {
+  ps -ef | grep -v grep | grep --color=never "UID\|${1}"
+}
+
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 umask 022
 
 alias grep="grep --color=auto"
 alias hgrep="history | grep"
-alias psgrep="ps -ef | grep -v grep | grep"
 alias dmesg="dmesg -T --color=always"
 alias pull="git pull"
 alias co="git checkout"
