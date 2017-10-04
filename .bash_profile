@@ -65,7 +65,15 @@ man() {
 }
 
 psgrep() {
-  ps -ef | grep -v grep | grep --color=never "UID\|${1}"
+  OLDIFS=${IFS}
+  IFS=$'\n'
+  proc=($(ps -ef | grep -v grep | grep --color=never "UID\|${1}"))
+  if [[ ${#proc[@]} > 1 ]]; then
+    for line in ${proc[@]}; do
+      echo $line
+    done
+  fi
+  IFS=${OLDIFS}
 }
 
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
