@@ -4,6 +4,7 @@ alias remove="sudo apt-get remove"
 eval `dircolors`
 
 export LS_OPTIONS="-h --color=auto --group-directories-first"
+export TMPDIR=/tmp
 alias ls="ls $LS_OPTIONS"
 alias ll="ls $LS_OPTIONS -l"
 alias l="ls $LS_OPTIONS -lA"
