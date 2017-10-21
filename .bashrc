@@ -76,6 +76,18 @@ psgrep() {
   IFS=${OLDIFS}
 }
 
+git-clone() {
+  git clone "$1"
+  OLDIFS=${IFS}
+  IFS='/'
+  read -r -a dir <<< "${1}"
+  IFS='.'
+  read -r -a dir <<< "${dir[1]}"
+  echo "cd into ${dir[0]}"
+  IFS=${OLDIFS}
+  cd ${dir[0]}
+}
+
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 umask 022
