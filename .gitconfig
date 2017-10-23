@@ -8,6 +8,7 @@
     st = status
     br = branch
     rbi = rebase -i
+	clone = git-clone
 [push]
 	default = simple
 [pull]
