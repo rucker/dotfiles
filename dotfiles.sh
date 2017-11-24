@@ -9,15 +9,15 @@ main() {
     fi
 
     echo Updating repos...
-    update_repo ${DOTFILES_SCRIPT_DIR}
-    update_repo $(dirname ${DFM_SCRIPT})
+    _update_repo ${DOTFILES_SCRIPT_DIR}
+    _update_repo $(dirname ${DFM_SCRIPT})
     echo Updates complete. Running dfm
     echo
 
     run_dfm "$@"
 }
 
-update_repo() {
+_update_repo() {
     pushd $1 &> /dev/null
     if [[ -z $(git status --porcelain) ]]; then
         echo Pulling $1
@@ -30,15 +30,15 @@ update_repo() {
 }
 
 run_dfm() {
-    ${DFM_SCRIPT} "${DOTFILES_SCRIPT_DIR}/src" "$@"
+    if [[ $(uname) == "Darwin" ]]; then
+        ${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src -e 98-bashrc_linux $@
+    else
+        ${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src -e 98-bashrc_mac $@
+    fi
+
     # Update dotfiles in this repo for vanity purposes
     if [[ $# -eq 0 ]]; then
-        ${DFM_SCRIPT} "${DOTFILES_SCRIPT_DIR}/src" --no-local -o ${DOTFILES_SCRIPT_DIR} 1>/dev/null
-        if [[ $(uname) == "Darwin" ]]; then
-            ${DFM_SCRIPT} "${DOTFILES_SCRIPT_DIR}/src" -f bashrc --no-local -o ${DOTFILES_SCRIPT_DIR} 1>/dev/null
-        else
-            ${DFM_SCRIPT} "${DOTFILES_SCRIPT_DIR}/src" -f bash_profile --no-local -o ${DOTFILES_SCRIPT_DIR} 1>/dev/null
-        fi
+        ${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src -e gitconfig_local -e 98-bashrc_linux -e 98-bashrc_mac -e 97-bashrc_local -o ${DOTFILES_SCRIPT_DIR}
     fi
 }
 
