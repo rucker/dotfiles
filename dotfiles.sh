@@ -30,11 +30,15 @@ _update_repo() {
 }
 
 run_dfm() {
-    if [[ $(uname) == "Darwin" ]]; then
-        ${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src -e 98-bashrc_linux $@
+    local RUN_DFM="${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src"
+    local excludes
+    if [[ $(uname) == "Linux" || ! -d /usr/local/opt/coreutils/libexec/gnubin/ ]]; then
+        excludes=98-bashrc_mac
     else
-        ${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src -e 98-bashrc_mac $@
+        excludes=98-bashrc_linux
     fi
+
+    $RUN_DFM -e ${excludes} $@
 
     # Update dotfiles in this repo for vanity purposes
     if [[ $# -eq 0 ]]; then
