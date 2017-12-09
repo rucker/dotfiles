@@ -42,7 +42,7 @@ run_dfm() {
 
     # Update dotfiles in this repo for vanity purposes
     if [[ $# -eq 0 ]]; then
-        ${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src -e gitconfig_local -e 98-bashrc_linux -e 98-bashrc_mac -e 97-bashrc_local -o ${DOTFILES_SCRIPT_DIR}
+        ${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src --no-symlinks -e gitconfig_local -e 98-bashrc_linux -e 98-bashrc_mac -e 97-bashrc_local -o ${DOTFILES_SCRIPT_DIR}
     fi
 }
 
