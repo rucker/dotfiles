@@ -14,7 +14,7 @@ main() {
     echo Updates complete. Running dfm
     echo
 
-    run_dfm "$@"
+    _run_dfm "$@"
 }
 
 _update_repo() {
@@ -29,16 +29,16 @@ _update_repo() {
     echo
 }
 
-run_dfm() {
-    local RUN_DFM="${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src"
+_run_dfm() {
+    local DFM_CMD="${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src"
     local excludes
-    if [[ $(uname) == "Linux" || ! -d /usr/local/opt/coreutils/libexec/gnubin/ ]]; then
+    if [[ $(uname) == "Linux" || $(uname) =~ "NT" || ! -d /usr/local/opt/coreutils/libexec/gnubin/ ]]; then
         excludes=98-bashrc_mac
     else
         excludes=98-bashrc_linux
     fi
 
-    $RUN_DFM -e ${excludes} $@
+    $DFM_CMD -e ${excludes} $@
 
     # Update dotfiles in this repo for vanity purposes
     if [[ $# -eq 0 ]]; then
