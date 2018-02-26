@@ -95,6 +95,7 @@ alias st="git st"
 alias lg="git lg -25"
 alias rbi="git rebase -i"
 alias gd="git diff"
+alias gls="git ls"
 __do_alias "diff" "colordiff"
 __do_alias "cat" "grc cat"
 
