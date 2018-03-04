@@ -82,6 +82,23 @@ git-clone() {
   cd ${dirname}
 }
 
+git-push() {
+  local push_res=$(git push 2>&1)
+  printf '%s\n' "${push_res[@]}"
+  echo
+  if [[ ${push_res} =~ "no upstream branch" ]]; then
+    local branch_name=$(git rev-parse --abbrev-ref HEAD)
+    while true; do
+      read -p "Set upstream to origin/${branch_name} and push? [Y/N] " yn
+      case ${yn} in
+        [Yy]* ) git push --set-upstream origin ${branch_name}; git push; break;;
+        [Nn]* ) break;;
+        * ) echo "Please enter Y or N"
+      esac
+    done
+  fi
+}
+
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 umask 022
