@@ -17,7 +17,7 @@ __tmux-attach() {
   IFS=${OLDIFS}
 }
 
-if [[ -z $TMUX_VERSION ]]; then
+if [[ ! -z $(which tmux) && -z $TMUX_VERSION ]]; then
   __tmux-attach
 fi
 
