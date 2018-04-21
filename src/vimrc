@@ -57,6 +57,7 @@ set splitright
 set splitbelow
 set backspace=indent,eol,start
 set shell=bash\ --login
+set background=dark
 vnoremap // y/<c-r>"<cr>		" search for visual selection with //
 imap jj <esc>					" always avoid escape key!
 " toggle highlighting from search matches
