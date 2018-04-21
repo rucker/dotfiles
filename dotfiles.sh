@@ -1,6 +1,10 @@
 #!/bin/bash
 
+NO_PULL=false
+declare -a ARGS
+
 main() {
+    _set_args "$@"
     DOTFILES_SCRIPT_DIR="$(dirname $([ -L $0 ] && readlink -f $0 || echo $0))"
     DFM_SCRIPT=$(readlink ${HOME}/bin/dfm)
     if [[ -z ${DFM_SCRIPT} ]]; then
@@ -8,13 +12,36 @@ main() {
         exit 1
     fi
 
-    echo Updating repos...
-    _update_repo ${DOTFILES_SCRIPT_DIR}
-    _update_repo $(dirname ${DFM_SCRIPT})
-    echo Updates complete. Running dfm
-    echo
+    if [[ $NO_PULL = false ]]; then
+        echo Updating repos...
+        _update_repo ${DOTFILES_SCRIPT_DIR}
+        _update_repo $(dirname ${DFM_SCRIPT})
+        echo Updates complete. Running dfm
+        echo
+    fi
 
-    _run_dfm "$@"
+    _run_dfm "${ARGS[@]}"
+}
+
+_set_args() {
+    while [[ $# -ge 1 ]]; do
+        arg="$1"
+        case "${arg}" in
+            --no-pull)
+                NO_PULL=true
+                shift
+                ;;
+            *)
+              if ! [[ "$2" =~ - ]]; then
+                  ARGS+=("$1" "$2")
+                  shift
+              else
+                  ARGS+=("$1")
+              fi
+              shift
+              ;;
+        esac
+    done
 }
 
 _update_repo() {
