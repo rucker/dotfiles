@@ -1,7 +1,8 @@
 #!/bin/bash
 
-NO_PULL=false
 declare -a ARGS
+declare DOTFILES_SCRIPT_DIR
+NO_PULL=false
 
 main() {
     _set_args "$@"
@@ -49,6 +50,27 @@ _update_repo() {
     if [[ -z $(git status --porcelain) ]]; then
         echo Pulling $1
         git pull
+        local this_script=$(echo $(basename $([ -L $0 ] && readlink -f $0 || echo $0)))
+        if [[ $1 == $DOTFILES_SCRIPT_DIR ]]; then
+            local modified_in_head=$(git diff-tree --no-commit-id --name-only -r HEAD | grep -q ${this_script}; echo $?)
+            if [[ ${modified_in_head} -eq 0 ]]; then
+                read -p "It looks like changes to this script were just pulled down. It is recommended that you exit now and re-run the script to pick up any changes. Exit now? [Y/N]: " answer
+                while true; do
+                    case $answer in
+                        [Yy])
+                            echo Exiting...
+                            exit;;
+                        [Nn])
+                            echo Continuing along...
+                            break;;
+                        *)
+                            read -p "Please enter Y or N: " answer
+                            ;;
+                    esac
+                done
+            fi
+        fi
+            
     else
         echo $1 contains unstaged changes. Skipping pull
     fi
