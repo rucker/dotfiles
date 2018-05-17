@@ -9,7 +9,7 @@
     br = branch
     rbi = rebase -i
 	clone = git-clone
-	ls = diff-tree --no-commit-id --name-only -r
+	ls = show --stat --abbrev-commit
 [push]
 	default = simple
 [pull]
