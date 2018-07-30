@@ -4,3 +4,5 @@ spike*
 *.iml
 .idea
 out
+.DS_Store
+.vscode
