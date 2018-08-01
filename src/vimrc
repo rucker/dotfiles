@@ -17,6 +17,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'pearofducks/ansible-vim'
+Plugin 'bkad/CamelCaseMotion'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -96,3 +97,4 @@ autocmd BufEnter */playbooks/*.yml
     \ set filetype=ansible
 
 autocmd BufEnter * call SetTabs()
+call camelcasemotion#CreateMotionMappings('<leader>')
