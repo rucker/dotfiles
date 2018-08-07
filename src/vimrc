@@ -59,8 +59,9 @@ set splitbelow
 set backspace=indent,eol,start
 set shell=bash\ --login
 set background=dark
-vnoremap // y/<c-r>"<cr>		" search for visual selection with //
-imap jj <esc>					" always avoid escape key!
+" search for visual selection with //
+vnoremap // y/<c-r>"<cr>
+imap jj <esc>
 " toggle highlighting from search matches
 let hlstate = 0
 nmap <silent> <leader>n :if (hlstate == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=1-hlstate<cr>
@@ -68,7 +69,7 @@ nmap <silent> <leader>n :if (hlstate == 0) \| nohlsearch \| else \| set hlsearch
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
-nnoremap <space> za				" enable folding with the spacebar
+nnoremap <space> za
 
 " use ctrl+hjkl to navigate windows
 nnoremap <c-j> <c-w><c-j>
