@@ -44,7 +44,6 @@ let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (us
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
 
 syntax on
-filetype on
 let mapleader=';'
 highlight LineNr ctermfg=red	" change color of line numbering so it's different than code font color
 set number
@@ -96,6 +95,9 @@ autocmd BufEnter Jenkinsfile*
 
 autocmd BufEnter */playbooks/*.yml
     \ set filetype=ansible
+
+autocmd BufEnter *.cake
+    \ set filetype=cs
 
 autocmd BufEnter * call SetTabs()
 call camelcasemotion#CreateMotionMappings('<leader>')
