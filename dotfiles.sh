@@ -105,19 +105,27 @@ _update_repo() {
 
 _run_dfm() {
     local DFM_CMD="${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src"
-    local excludes
+    local exclude
     if [[ $(uname) == "Linux" || $(uname) =~ "NT" || ! -d /usr/local/opt/coreutils/libexec/gnubin/ ]]; then
-        excludes=98-bashrc_mac
+        exclude=98-bashrc_mac
     else
-        excludes=98-bashrc_linux
+        exclude=98-bashrc_linux
     fi
 
-    ${DFM_CMD} -e ${excludes} $@
+    ${DFM_CMD} -e ${exclude} $@
 
     # Update dotfiles in this repo for vanity purposes
-    if [[ $# -eq 0 ]]; then
-        ${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src --no-symlinks -e gitconfig_local -e 98-bashrc_linux -e 98-bashrc_mac -e 97-bashrc_local -o ${DOTFILES_SCRIPT_DIR}
-    fi
+    local args=( $@ )
+        local idx=0
+        while [[ ${idx} -lt ${#args[@]} ]]; do
+            if [[ ${args[${idx}]} == "-o" ]]; then
+                args[${idx} + 1]=${DOTFILES_SCRIPT_DIR}
+                break;
+            fi
+            let idx++
+        done
+        local excludes=( -e gitconfig_local -e 98-bashrc_linux -e 98-bashrc_mac -e 97-bashrc_local -o  )
+        ${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src --no-symlinks ${excludes[@]} ${DOTFILES_SCRIPT_DIR} ${args[@]}
 }
 
 main "$@"
