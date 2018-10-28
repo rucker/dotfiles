@@ -15,8 +15,16 @@ main() {
 
     if [[ $NO_PULL = false ]]; then
         echo Updating repos...
-        _update_repo ${DOTFILES_SCRIPT_DIR}
-        _update_repo $(dirname ${DFM_SCRIPT})
+        declare -a repos=( ${DOTFILES_SCRIPT_DIR} $(dirname ${DFM_SCRIPT}) )
+        for repo in ${repos}; do
+            echo Updating repo ${repo}
+                _update_repo ${repo}
+                local result=$?
+            if [[ ${result} -ne 0 ]]; then
+                echo There was a problem updating repo ${repo}. Abort
+                exit 1
+            fi
+        done
         echo Updates complete. Running dfm
         echo
     fi
@@ -51,17 +59,17 @@ _update_repo() {
         echo Pulling $1
         git pull
         local this_script=$(echo $(basename $([ -L $0 ] && readlink -f $0 || echo $0)))
-        if [[ $1 == $DOTFILES_SCRIPT_DIR ]]; then
+        if [[ $1 == ${DOTFILES_SCRIPT_DIR} ]]; then
             local modified_in_head=$(git diff-tree --no-commit-id --name-only -r HEAD | grep -q ${this_script}; echo $?)
             if [[ ${modified_in_head} -eq 0 ]]; then
                 read -p "It looks like changes to this script were just pulled down. It is recommended that you exit now and re-run the script to pick up any changes. Exit now? [Y/N]: " answer
                 while true; do
-                    case $answer in
+                    case ${answer} in
                         [Yy])
-                            echo Exiting...
+                            echo Exit
                             exit;;
                         [Nn])
-                            echo Continuing along...
+                            echo Continuing along
                             break;;
                         *)
                             read -p "Please enter Y or N: " answer
@@ -72,7 +80,24 @@ _update_repo() {
         fi
             
     else
-        echo $1 contains unstaged changes. Skipping pull
+        read -p "Repo contains unstaged changes. Pull and apply changes? [Y/N]: " answer
+        while true; do
+            case ${answer} in
+                [Yy])
+                    local pull_cmd="git stash && git pull && git stash pop"
+                    echo -e "\n${pull_cmd}"
+                    eval ${pull_cmd}
+                    [[ $? -eq 0 ]] || return 1
+                    break;;
+                [Nn])
+                    echo Skipping pull
+                    break;;
+                *)
+                    read -p "Please enter Y or N: " answer
+                    ;;
+            esac
+        done
+
     fi
     popd &> /dev/null
     echo
@@ -87,7 +112,7 @@ _run_dfm() {
         excludes=98-bashrc_linux
     fi
 
-    $DFM_CMD -e ${excludes} $@
+    ${DFM_CMD} -e ${excludes} $@
 
     # Update dotfiles in this repo for vanity purposes
     if [[ $# -eq 0 ]]; then
