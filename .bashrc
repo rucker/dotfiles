@@ -30,6 +30,7 @@ shopt -s globstar
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 __tmux-attach() {
+  [[ ! -z $SSH_CONNECTION ]] && return
   local OLDIFS=${IFS}
   IFS=$'\n'
   local tmux_sessions=($(tmux list-sessions))
