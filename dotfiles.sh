@@ -15,9 +15,8 @@ main() {
 
     if [[ $NO_PULL = false ]]; then
         echo Updating repos...
-        declare -a repos=( ${DOTFILES_SCRIPT_DIR} $(dirname ${DFM_SCRIPT}) )
-        for repo in ${repos}; do
-            echo Updating repo ${repo}
+        repos=( ${DOTFILES_SCRIPT_DIR} $(dirname ${DFM_SCRIPT}) )
+        for repo in ${repos[@]}; do
                 _update_repo ${repo}
                 local result=$?
             if [[ ${result} -ne 0 ]]; then
@@ -55,8 +54,8 @@ _set_args() {
 
 _update_repo() {
     pushd $1 &> /dev/null
+    echo $1
     if [[ -z $(git status --porcelain) ]]; then
-        echo Pulling $1
         git pull
         local this_script=$(echo $(basename $([ -L $0 ] && readlink -f $0 || echo $0)))
         if [[ $1 == ${DOTFILES_SCRIPT_DIR} ]]; then
