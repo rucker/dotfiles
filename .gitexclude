@@ -5,4 +5,5 @@ spike*
 .idea
 out
 .DS_Store
+.vs
 .vscode
