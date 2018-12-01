@@ -29,27 +29,6 @@ shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-__tmux-attach() {
-  [[ ! -z $SSH_CONNECTION ]] && return
-  local OLDIFS=${IFS}
-  IFS=$'\n'
-  local tmux_sessions=($(tmux list-sessions))
-  if [[ -z ${tmux_sessions} ]]; then
-    tmux
-  elif [[ ${#tmux_sessions[@]} -gt 1 ]]; then
-    echo Multiple tmux sessions exist. Not attaching
-  elif [[ ${tmux_sessions} =~ "attached" ]]; then
-    echo One attached tmux session. Not attaching
-  else
-    tmux a
-  fi
-  IFS=${OLDIFS}
-}
-
-if [[ ! -z $(which tmux) && -z $TMUX_VERSION ]]; then
-  __tmux-attach
-fi
-
 __do_alias() {
     for prog in $(echo $2 | tr " " "\n"); do
         if [[ $prog == -* ]]; then
@@ -81,6 +60,27 @@ __running_in_docker() {
         echo false
     fi
 }
+
+__tmux-attach() {
+  [[ ! -z $SSH_CONNECTION || __running_in_docker == "true" ]] && return
+  local OLDIFS=${IFS}
+  IFS=$'\n'
+  local tmux_sessions=($(tmux list-sessions))
+  if [[ -z ${tmux_sessions} ]]; then
+    tmux
+  elif [[ ${#tmux_sessions[@]} -gt 1 ]]; then
+    echo Multiple tmux sessions exist. Not attaching
+  elif [[ ${tmux_sessions} =~ "attached" ]]; then
+    echo One attached tmux session. Not attaching
+  else
+    tmux a
+  fi
+  IFS=${OLDIFS}
+}
+
+if [[ ! -z $(which tmux) && -z $TMUX_VERSION ]]; then
+  __tmux-attach
+fi
 
 __build_ps1() {
     GO_TO_FIRST_COL="\[\033[G\]"
