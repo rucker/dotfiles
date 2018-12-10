@@ -3,31 +3,33 @@
 declare -a ARGS
 declare DOTFILES_SCRIPT_DIR
 NO_PULL=false
-INSTALL=false
 THIS_SCRIPT=$(echo $(basename $([ -L $0 ] && readlink -f $0 || echo $0)))
-DFM_OPTS=($(dfm --help | grep -v -E "\[" | grep -o -- "\s[-]\+[Aa-Zz|-]\+"))
+DFM=${HOME}/bin/dfm
+declare DFM_OPTS
 SCRIPT_OPTS=(-h --help -i --install --no-pull)
 
-__usage() {
+_usage() {
     echo -e "Usage: ${THIS_SCRIPT} ${SCRIPT_OPTS[@]} \n"
     echo "Dotfiles-Manager (dfm.py) wrapper script"
 }
 
-
 main() {
-    _set_args "$@"
-    [[ ${INSTALL} ]] && _install
 
-    DOTFILES_SCRIPT_DIR="$(dirname $([ -L $0 ] && readlink -f $0 || echo $0))"
-    DFM_SCRIPT=$(readlink ${HOME}/bin/dfm)
-    if [[ -z ${DFM_SCRIPT} ]]; then
-        echo dfm not found on '$PATH'.
+    [[ $@ =~ -i || $@ =~ --install ]] && _install
+
+    if [[ ! -e ${DFM} ]]; then
+        echo "dfm not found in ${HOME}/bin. Run with -i | --install to install."
+        _usage
         exit 1
+    else
+        _get_dfm_opts
+        _set_opts "$@"
     fi
 
+    DOTFILES_SCRIPT_DIR="$(dirname $([ -L $0 ] && readlink -f $0 || echo $0))"
     if [[ $NO_PULL = false ]]; then
         echo Updating repos...
-        repos=( ${DOTFILES_SCRIPT_DIR} $(dirname ${DFM_SCRIPT}) )
+        repos=( ${DOTFILES_SCRIPT_DIR} $(dirname $(readlink ${DFM})) )
         for repo in ${repos[@]}; do
             _update_repo ${repo}
             local result=$?
@@ -43,25 +45,28 @@ main() {
     _run_dfm "${ARGS[@]}"
 }
 
-_set_args() {
+_get_dfm_opts() {
+    DFM_OPTS=($(${HOME}/bin/dfm --help | grep -v -E "\[" | grep -o -- "\s[-]\+[A-Za-z|-]\+"))
+}
+
+_set_opts() {
     while [[ $# -ge 1 ]]; do
         arg="$1"
         case "${arg}" in
             -h|--help)
-                __usage
+                _usage
                 exit;;
             --no-pull)
                 NO_PULL=true
                 shift
                 ;;
             -i|--install)
-                INSTALL=true
                 shift
                 ;;
             *)
                 if [[ ! ${DFM_OPTS[@]} =~ ${arg} ]]; then
                     echo "Unrecognized option ${arg}"
-                    __usage
+                    _usage
                     exit
                 fi
                 if ! [[ "$2" =~ - ]]; then
@@ -77,6 +82,46 @@ _set_args() {
 }
 
 _install() {
+    echo Installing...
+    local repos_dir=$(dirname $(dirname $(realpath BASH_SOURCE[0])))
+
+    if [[ ! -d ${repos_dir} ]]; then
+        echo Creating ${repos_dir}
+        mkdir ${repos_dir}
+    fi
+
+    pushd ${repos_dir} 2>&1 > /dev/null
+
+    if [[ ! -d dotfiles-manager ]]; then
+        echo Cloning Dotfiles Manager
+        git clone https://github.com/rucker/dotfiles-manager.git
+    fi
+
+    local home_bin=${HOME}/bin
+    if [[ ! -d ${home_bin} ]]; then
+        echo Creating ${home_bin}
+        mkdir ${home_bin}
+    fi
+
+    local dfm_link=${home_bin}/dfm
+    if [[ -z $(readlink ${dfm_link}) ]]; then
+        local dfm_link_taget=${repos_dir}/dotfiles-manager/dotfilesmanager/dfm.py
+        echo "Linking ${home_bin}/dfm -> ${dfm_link_taget}"
+        ln -s ${dfm_link_taget} ${dfm_link}
+    fi
+
+    local dotfiles_link=${home_bin}/dotfiles
+    if [[ -z $(readlink ${dotfiles_link}) ]]; then
+        local dotfiles_link_target=${repos_dir}/dotfiles/${THIS_SCRIPT}
+        echo "Linking ${dotfiles_link_target} -> ${dotfiles_link}"
+        ln -s ${dotfiles_link_target} ${home_bin}/dotfiles
+    fi
+
+    echo Installation complete
+
+    popd 2>&1 > /dev/null
+
+    _get_dfm_opts
 }
 
 _update_repo() {
@@ -129,7 +174,7 @@ _update_repo() {
 }
 
 _run_dfm() {
-    local DFM_CMD="${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src"
+    local DFM_CMD="${DFM} ${DOTFILES_SCRIPT_DIR}/src"
     local exclude
     if [[ $(uname) == "Linux" || $(uname) =~ "NT" || ! -d /usr/local/opt/coreutils/libexec/gnubin/ ]]; then
         exclude=98-bashrc_mac
@@ -150,7 +195,7 @@ _run_dfm() {
             let idx++
         done
         local excludes=( -e gitconfig_local -e 98-bashrc_linux -e 98-bashrc_mac -e 97-bashrc_local -o  )
-        ${DFM_SCRIPT} ${DOTFILES_SCRIPT_DIR}/src --no-symlinks ${excludes[@]} ${DOTFILES_SCRIPT_DIR} ${args[@]}
+        ${DFM} ${DOTFILES_SCRIPT_DIR}/src --no-symlinks ${excludes[@]} ${DOTFILES_SCRIPT_DIR} ${args[@]}
 }
 
 main "$@"
