@@ -29,7 +29,7 @@ main() {
         _set_opts "$@"
     fi
 
-    DOTFILES_SCRIPT_DIR="$(dirname $([ -L $0 ] && readlink -f $0 || echo $0))"
+    DOTFILES_SCRIPT_DIR=$(realpath $(dirname $([ -L $0 ] && readlink -f $0 || echo $0)))
     if [[ $NO_PULL = false ]]; then
         echo Updating repos...
         repos=( ${DOTFILES_SCRIPT_DIR} $(dirname $(readlink ${DFM})) )
