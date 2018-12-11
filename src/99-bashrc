@@ -169,3 +169,4 @@ alias gd="git diff"
 alias gls="git ls"
 __do_alias "diff" "colordiff"
 __do_alias "cat" "grc cat"
+__build_ps1
