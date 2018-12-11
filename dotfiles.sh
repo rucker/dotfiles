@@ -108,9 +108,9 @@ _install() {
 
     local dfm_link=${home_bin}/dfm
     if [[ -z $(readlink ${dfm_link}) ]]; then
-        local dfm_link_taget=${repos_dir}/dotfiles-manager/dotfilesmanager/dfm.py
-        echo "Linking ${home_bin}/dfm -> ${dfm_link_taget}"
-        ln -s ${dfm_link_taget} ${dfm_link}
+        local dfm_link_target=${repos_dir}/dotfiles-manager/dotfilesmanager/dfm.py
+        echo "Linking ${dfm_link_target} -> ${dfm_link}"
+        ln -s ${dfm_link_target} ${dfm_link}
     fi
 
     local dotfiles_link=${home_bin}/dotfiles
