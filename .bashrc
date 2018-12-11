@@ -62,7 +62,7 @@ __running_in_docker() {
 }
 
 __tmux-attach() {
-  [[ ! -z $SSH_CONNECTION || __running_in_docker == "true" ]] && return
+  [[ ! -z $SSH_CONNECTION || $(__running_in_docker) == "true" ]] && return
   local OLDIFS=${IFS}
   IFS=$'\n'
   local tmux_sessions=($(tmux list-sessions))
