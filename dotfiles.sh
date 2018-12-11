@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 declare -a ARGS
 declare DOTFILES_SCRIPT_DIR
