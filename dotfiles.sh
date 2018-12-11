@@ -15,7 +15,10 @@ _usage() {
 
 main() {
 
-    [[ $@ =~ -i || $@ =~ --install ]] && _install
+    if [[ $@ =~ -i || $@ =~ --install ]]; then
+      _install
+      NO_PULL=true
+    fi
 
     if [[ ! -e ${DFM} ]]; then
         echo "dfm not found in ${HOME}/bin. Run with -i | --install to install."
