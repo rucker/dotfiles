@@ -14,14 +14,13 @@ _usage() {
 }
 
 main() {
-    _set_opts "$@"
-
     if [[ ! -e ${DFM} ]]; then
         echo "dfm not found in ${HOME}/bin. Run with -i | --install to install."
         _usage
         exit 1
     else
         _get_dfm_opts
+        _set_opts "$@"
     fi
 
     DOTFILES_SCRIPT_DIR=$(realpath $(dirname $([ -L $0 ] && readlink -f $0 || echo $0)))
