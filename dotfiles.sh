@@ -61,7 +61,7 @@ _set_opts() {
                     _usage
                     exit
                 fi
-                if ! [[ "$2" =~ - ]]; then
+                if [[ -n "$2" && ! "$2" =~ - ]]; then
                     ARGS+=("$1" "$2")
                     shift
                 else
