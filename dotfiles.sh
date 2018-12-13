@@ -29,14 +29,8 @@ main() {
         repos=( ${DOTFILES_SCRIPT_DIR} $(dirname $(readlink ${DFM})) )
         for repo in ${repos[@]}; do
             _update_repo ${repo}
-            local result=$?
-            if [[ ${result} -ne 0 ]]; then
-                echo There was a problem updating repo ${repo}. Abort
-                exit 1
-            fi
         done
-        echo Updates complete. Running dfm
-        echo
+        echo -e "Updates complete. Running dfm \n"
     fi
 
     _run_dfm "${ARGS[@]}"
