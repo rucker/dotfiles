@@ -37,7 +37,7 @@ main() {
 }
 
 _get_dfm_opts() {
-    DFM_OPTS=($(${HOME}/bin/dfm --help | grep -v -E "\[" | grep -o -- "\s[-]\+[A-Za-z|-]\+"))
+    DFM_OPTS=($(${DFM} --help | grep -v -E "\[" | grep -o -- "\s[-]\+[A-Za-z|-]\+"))
 }
 
 _set_opts() {
@@ -95,11 +95,10 @@ _install() {
         mkdir ${home_bin}
     fi
 
-    local dfm_link=${home_bin}/dfm
-    if [[ -z $(readlink ${dfm_link}) ]]; then
+    if [[ -z $(readlink ${DFM}) ]]; then
         local dfm_link_target=${repos_dir}/dotfiles-manager/dotfilesmanager/dfm.py
-        echo "Linking ${dfm_link} -> ${dfm_link_target}"
-        ln -s ${dfm_link_target} ${dfm_link}
+        echo "Linking ${DFM} -> ${dfm_link_target}"
+        ln -s ${dfm_link_target} ${DFM}
     fi
 
     local dotfiles_link=${home_bin}/dotfiles
