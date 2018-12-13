@@ -14,6 +14,11 @@ _usage() {
 }
 
 main() {
+    if [[ $@ =~ -i || $@ =~ --install ]]; then
+      _install
+      exit
+    fi
+
     if [[ ! -e ${DFM} ]]; then
         echo "dfm not found in ${HOME}/bin. Run with -i | --install to install."
         _usage
@@ -52,8 +57,7 @@ _set_opts() {
                 shift
                 ;;
             -i|--install)
-                _install
-                exit
+                shift
                 ;;
             *)
                 if [[ ! ${DFM_OPTS[@]} =~ ${arg} ]]; then
@@ -108,7 +112,7 @@ _install() {
         ln -s ${dotfiles_link_target} ${home_bin}/dotfiles
     fi
 
-    echo Installation complete.
+    echo Installation complete
 
     popd 2>&1 > /dev/null
 
