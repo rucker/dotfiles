@@ -14,11 +14,7 @@ _usage() {
 }
 
 main() {
-
-    if [[ $@ =~ -i || $@ =~ --install ]]; then
-      _install
-      NO_PULL=true
-    fi
+    _set_opts "$@"
 
     if [[ ! -e ${DFM} ]]; then
         echo "dfm not found in ${HOME}/bin. Run with -i | --install to install."
@@ -26,7 +22,6 @@ main() {
         exit 1
     else
         _get_dfm_opts
-        _set_opts "$@"
     fi
 
     DOTFILES_SCRIPT_DIR=$(realpath $(dirname $([ -L $0 ] && readlink -f $0 || echo $0)))
@@ -64,7 +59,8 @@ _set_opts() {
                 shift
                 ;;
             -i|--install)
-                shift
+                _install
+                exit
                 ;;
             *)
                 if [[ ! ${DFM_OPTS[@]} =~ ${arg} ]]; then
@@ -120,7 +116,7 @@ _install() {
         ln -s ${dotfiles_link_target} ${home_bin}/dotfiles
     fi
 
-    echo Installation complete
+    echo Installation complete.
 
     popd 2>&1 > /dev/null
 
