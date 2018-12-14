@@ -103,4 +103,7 @@ autocmd BufEnter *gitconfig*
     \ set filetype=gitconfig
 
 autocmd BufEnter * call SetTabs()
-call camelcasemotion#CreateMotionMappings('<leader>')
+
+if finddir("${HOME}/.vim/CamelCaseMotion") !=? ""
+    call camelcasemotion#CreateMotionMappings('<leader>')
+endif
