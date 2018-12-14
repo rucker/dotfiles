@@ -190,7 +190,7 @@ _run_dfm() {
             let idx++
         done
         local excludes=( -e gitconfig_local -e 98-bashrc_linux -e 98-bashrc_mac -e 97-bashrc_local -o  )
-        ${DFM} ${DOTFILES_SCRIPT_DIR}/src --no-symlinks ${excludes[@]} ${DOTFILES_SCRIPT_DIR} ${args[@]}
+        ${DFM_CMD} --no-symlinks ${excludes[@]} ${DOTFILES_SCRIPT_DIR} ${args[@]}
 }
 
 main "$@"
