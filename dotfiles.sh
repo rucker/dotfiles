@@ -185,9 +185,9 @@ _run_dfm() {
   while [[ ${idx} -lt ${#args[@]} ]]; do
     if [[ ${args[${idx}]} == "-o" ]]; then
       args[${idx} + 1]=${DOTFILES_SCRIPT_DIR}
-      break;
+      break
     fi
-    let idx++
+    ((idx++))
   done
   local excludes=( -e gitconfig_local -e 98-bashrc_linux -e 98-bashrc_mac -e 97-bashrc_local -o )
   ${DFM_CMD} --no-symlinks ${excludes[@]} ${DOTFILES_SCRIPT_DIR} ${args[@]}
