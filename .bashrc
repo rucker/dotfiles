@@ -125,10 +125,15 @@ psgrep() {
 }
 
 git-clone() {
-  git clone "$1"
-  dirname=$(echo ${1##*/} | sed 's,.git,,')
-  echo "cd ${dirname}"
-  cd ${dirname}
+  if [[ ! -z ${1} ]] ; then
+    if git clone "$1"; then
+      dirname=$(echo ${1##*/} | sed 's,.git,,')
+      echo "cd ${dirname}"
+      cd ${dirname}
+    fi
+  else
+    git clone
+  fi
 }
 
 git-push() {
