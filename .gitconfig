@@ -20,3 +20,5 @@
 [mergetool]
 	prompt = false
 	keepBackup = false
+[user]
+	name = Rick Ucker
