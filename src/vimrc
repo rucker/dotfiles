@@ -18,6 +18,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'pearofducks/ansible-vim'
 Plugin 'bkad/CamelCaseMotion'
+Plugin 'elixir-editors/vim-elixir'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -79,7 +80,7 @@ nnoremap <c-h> <c-w><c-h>
 function SetTabs()
     if &filetype == 'make' || &filetype == 'gitconfig'
         set shiftwidth=8 tabstop=8 noexpandtab
-    elseif &filetype == 'ruby' || &filetype == 'sh' || &filetype == 'ansible'
+    elseif &filetype == 'ruby' || &filetype == 'sh' || &filetype == 'ansible' || &filetype == 'elixir'
         set shiftwidth=2 tabstop=2 expandtab
     else
         set shiftwidth=4 tabstop=4 expandtab
