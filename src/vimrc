@@ -44,6 +44,8 @@ let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } } " Add your
 let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
 
+let g:ctrlp_max_files=0
+
 syntax on
 let mapleader=';'
 highlight LineNr ctermfg=red	" change color of line numbering so it's different than code font color
