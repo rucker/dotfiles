@@ -158,6 +158,20 @@ git-push() {
   fi
 }
 
+up() {
+  if [[ -z $1 ]]; then
+   >&2 echo "Usage: up <number>"
+   return 1
+  fi
+  local idx=$1
+  local cmd=""
+  while [[ $idx -gt 0 ]]; do
+    cmd="$cmd../"
+    ((idx--))
+  done
+  eval "cd $cmd"
+}
+
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 umask 022
