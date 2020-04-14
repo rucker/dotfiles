@@ -19,6 +19,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'pearofducks/ansible-vim'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'elixir-editors/vim-elixir'
+Plugin 'ludovicchabant/vim-gutentags'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -61,6 +62,7 @@ set splitbelow
 set backspace=indent,eol,start
 set shell=bash\ --login
 set background=dark
+set cscopetag
 " search for visual selection with //
 vnoremap // y/<c-r>"<cr>
 imap jj <esc>
