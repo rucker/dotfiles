@@ -20,6 +20,8 @@ Plugin 'pearofducks/ansible-vim'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'elixir-editors/vim-elixir'
 Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'jceb/vim-orgmode'
+Plugin 'tpope/vim-speeddating'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
