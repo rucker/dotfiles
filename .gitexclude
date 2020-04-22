@@ -1,9 +1,10 @@
-*.swp
-*.swo
-spike*
 *.iml
-.idea
-out
+*.swo
+*.swp
 .DS_Store
+.idea
 .vs
 .vscode
+out
+spike*
+tags
