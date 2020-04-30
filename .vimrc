@@ -86,6 +86,8 @@ nnoremap <c-h> <c-w><c-h>
 nnoremap <Leader>ve :vsplit $MYVIMRC<cr>
 nnoremap <Leader>vs :source $MYVIMRC<cr>
 
+vmap Y "*y
+
 function SetTabs()
     if &filetype == 'make' || &filetype == 'gitconfig'
         set shiftwidth=8 tabstop=8 noexpandtab
