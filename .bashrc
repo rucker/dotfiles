@@ -172,6 +172,15 @@ up() {
   eval "cd $cmd"
 }
 
+mkcd() {
+  if [[ -z $1 ]]; then
+   >&2 echo "Usage: mkcd DIRNAME"
+   return 1
+  fi
+
+  eval "mkdir $1 && cd $1"
+}
+
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 umask 022
