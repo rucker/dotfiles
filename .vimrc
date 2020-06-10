@@ -24,6 +24,7 @@ Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
 
 " All of your Plugins must be added before the following line
+filetype off
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
