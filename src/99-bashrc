@@ -33,7 +33,7 @@ __do_alias() {
     for prog in $(echo $2 | tr " " "\n"); do
         if [[ $prog == -* ]]; then
             continue
-        elif [[ "$(which $prog)" == "" ]]; then
+        elif [[ $(which $prog > /dev/null 2>&1; echo $?) -ne 0 ]]; then
             return
         fi
     done
