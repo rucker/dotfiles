@@ -189,8 +189,9 @@ _run_dfm() {
     fi
     ((idx++))
   done
-  local excludes=( -e gitconfig_local -e 98-bashrc_linux -e 98-bashrc_mac -e 97-bashrc_local -o )
-  ${DFM_CMD} --no-symlinks ${excludes[@]} ${DOTFILES_SCRIPT_DIR} ${args[@]}
+  local known_excludes=( 98-bashrc_linux 98-bashrc_mac )
+  local local_excludes=($(echo $(ls src/*_local) | sed 's,src/,,g'))
+  ${DFM_CMD} --no-symlinks ${known_excludes[@]/#/-e} ${local_excludes[@]/#/-e} -o ${DOTFILES_SCRIPT_DIR} ${args[@]}
 }
 
 main "$@"
