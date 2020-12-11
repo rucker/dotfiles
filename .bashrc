@@ -181,6 +181,22 @@ mkcd() {
   eval "mkdir $1 && cd $1"
 }
 
+latest() {
+    local dir
+    local results=11
+
+    while [[ $# -ge 1 ]]; do
+        if [[ -d $1 ]]; then
+            dir=$1
+            shift
+        elif [[ -n $1 ]]; then
+            results=$(($1 + 1)) #Bump to offset ls 'total' line
+            shift
+        fi
+    done
+    ls -lAtc $dir | head -n $results
+}
+
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 umask 022
