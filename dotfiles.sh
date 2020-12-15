@@ -123,8 +123,9 @@ _update_repo() {
   pushd $1 &> /dev/null
   echo $1
   if [[ -z $(git status --porcelain) ]]; then
+    local commit_hash=$(git rev-parse HEAD)
     git pull
-    if [[ $1 == ${DOTFILES_SCRIPT_DIR} ]]; then
+    if [[ $1 == ${DOTFILES_SCRIPT_DIR} && ${commit_hash} != $(git rev-parse HEAD) ]]; then
       local modified_in_head=$(git diff-tree --no-commit-id --name-only -r HEAD | grep -q ${THIS_SCRIPT}; echo $?)
       if [[ ${modified_in_head} -eq 0 ]]; then
         read -p "It looks like changes to this script were just pulled down. It is recommended that you exit now and re-run the script to pick up any changes. Exit now? [Y/N]: " answer
