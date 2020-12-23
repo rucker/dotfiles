@@ -22,6 +22,7 @@ Plugin 'elixir-editors/vim-elixir'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
+Plugin 'zigford/vim-powershell'
 
 " All of your Plugins must be added before the following line
 filetype off
