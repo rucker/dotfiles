@@ -1,10 +1,17 @@
+# Finder/Explorer artifacts
+.DS_Store
+Thumbs.db
+Thumbs.db:encryptable
+
+# Editor/IDE artifacts
 *.iml
 *.swo
 *.swp
-.DS_Store
 .idea
 .vs
 .vscode
+
+# Custom stuff
 out
 spike*
 tags
