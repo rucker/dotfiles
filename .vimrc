@@ -117,6 +117,9 @@ autocmd BufEnter *.cake
 autocmd BufEnter *gitconfig*
     \ set filetype=gitconfig
 
+autocmd BufEnter *.org
+    \ setlocal tw=0
+
 autocmd BufEnter * call SetTabs()
 
 if finddir("${HOME}/.vim/CamelCaseMotion") !=? ""
