@@ -125,14 +125,22 @@ psgrep() {
 }
 
 git-clone() {
-  if [[ ! -z ${1} ]] ; then
-    if git clone "$1"; then
+  if [[ $# -eq 0 ]]; then
+    git clone
+  elif [[ $# -eq 1 ]]; then
+    if git clone ${1}; then
       dirname=$(echo ${1##*/} | sed 's,.git,,')
-      echo "cd ${dirname}"
+      echo cd ${dirname}
       cd ${dirname}
     fi
+  elif [[ $# -eq 2 ]]; then
+    if git clone $@; then
+      echo cd ${2}
+      cd ${2}
+    fi
   else
-    git clone
+    echo "Usage: ${FUNCNAME[0]} <repository> [<directory>]"
+    echo If you need to do something fancy, try a naked \'git clone\' instead.
   fi
 }
 
