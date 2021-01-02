@@ -23,6 +23,7 @@ Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
 Plugin 'zigford/vim-powershell'
+Plugin 'vim-scripts/nc.vim--Eno'
 
 " All of your Plugins must be added before the following line
 filetype off
@@ -119,6 +120,9 @@ autocmd BufEnter *gitconfig*
 
 autocmd BufEnter *.org
     \ setlocal tw=0
+
+autocmd BufEnter *.gcode
+    \ set filetype=nc
 
 autocmd BufEnter * call SetTabs()
 
