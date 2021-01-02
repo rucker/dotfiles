@@ -86,6 +86,7 @@ nnoremap <c-l> <c-w><c-l>
 nnoremap <c-h> <c-w><c-h>
 
 nnoremap <Leader>ve :vsplit $MYVIMRC<cr>
+nnoremap <Leader>vt :tabnew $MYVIMRC<cr>
 nnoremap <Leader>vs :source $MYVIMRC<cr>
 
 vmap Y "*y
