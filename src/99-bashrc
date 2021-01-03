@@ -167,9 +167,13 @@ git-push() {
 }
 
 up() {
-  if [[ -z $1 ]]; then
-   >&2 echo "Usage: up <number>"
-   return 1
+  if [[ $# -eq 0 ]]; then
+    cd ..
+    return
+  elif [[ $# -gt 1 ]]; then
+    >&2 echo "Got too many args"
+    >&2 echo "Usage: ${FUNCNAME[0]} [<number>]"
+    return 1
   fi
   local idx=$1
   local cmd=""
