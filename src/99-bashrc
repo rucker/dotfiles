@@ -7,6 +7,36 @@ case $- in
       *) return;;
 esac
 
+# Begin auto start/attach tmux
+__running_in_docker() {
+  if [[ -d /proc ]]; then
+    awk -F/ '$2 == "docker"' /proc/self/cgroup | read
+    if [[ $? -eq 0 ]]; then
+      echo true
+    else
+      echo false
+    fi
+  else
+    echo false
+  fi
+}
+
+__tmux-attach() {
+[[ ! -z $SSH_CONNECTION || $(__running_in_docker) == "true" || -z $(which tmux) || ! -z $TMUX_VERSION ]] && return
+  local OLDIFS=${IFS}
+  IFS=$':'
+  local tmux_sessions=($(tmux list-sessions))
+  if [[ -z ${tmux_sessions} ]]; then
+    tmux
+  else
+    tmux a -t ${tmux_sessions[0]}
+  fi
+  IFS=${OLDIFS}
+}
+
+__tmux-attach
+# End auto start/attach tmux
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -47,40 +77,6 @@ __source_in_dir() {
         done
     fi
 }
-
-__running_in_docker() {
-    if [[ -d /proc ]]; then
-        awk -F/ '$2 == "docker"' /proc/self/cgroup | read
-        if [[ $? -eq 0 ]]; then
-            echo true
-        else
-            echo false
-        fi
-    else
-        echo false
-    fi
-}
-
-__tmux-attach() {
-  [[ ! -z $SSH_CONNECTION || $(__running_in_docker) == "true" ]] && return
-  local OLDIFS=${IFS}
-  IFS=$'\n'
-  local tmux_sessions=($(tmux list-sessions))
-  if [[ -z ${tmux_sessions} ]]; then
-    tmux
-  elif [[ ${#tmux_sessions[@]} -gt 1 ]]; then
-    echo Multiple tmux sessions exist. Not attaching
-  elif [[ ${tmux_sessions} =~ "attached" ]]; then
-    echo One attached tmux session. Not attaching
-  else
-    tmux a
-  fi
-  IFS=${OLDIFS}
-}
-
-if [[ ! -z $(which tmux) && -z $TMUX_VERSION ]]; then
-  __tmux-attach
-fi
 
 __build_ps1() {
     GO_TO_FIRST_COL="\[\033[G\]"
