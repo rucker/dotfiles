@@ -24,6 +24,7 @@ Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
 Plugin 'zigford/vim-powershell'
 Plugin 'vim-scripts/nc.vim--Eno'
+Plugin 'vim-scripts/vim-auto-save'
 
 " All of your Plugins must be added before the following line
 filetype off
@@ -41,6 +42,7 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+" Start Plugin Settings
 " NERD Commenter settings
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
 let g:NERDCompactSexyComs = 1 " Use compact syntax for prettified multi-line comments
@@ -50,7 +52,13 @@ let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } } " Add your
 let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
 
+" CtrlP
 let g:ctrlp_max_files=0
+
+" vim-auto-save
+let g:auto_save = 1
+
+" End Plugin Settings
 
 syntax on
 let mapleader=';'
@@ -119,7 +127,8 @@ autocmd BufEnter *gitconfig*
     \ set filetype=gitconfig
 
 autocmd BufEnter *.org
-    \ setlocal tw=0
+    \ setlocal tw=0 |
+    \ setlocal noswapfile
 
 autocmd BufEnter *.gcode
     \ set filetype=nc
