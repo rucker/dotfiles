@@ -134,6 +134,8 @@ autocmd BufEnter *.gcode
     \ set filetype=nc
 
 autocmd BufEnter * call SetTabs()
+autocmd BufEnter,FocusGained * checktime
+autocmd CursorHold,CursorHoldI * checktime
 
 if finddir("${HOME}/.vim/CamelCaseMotion") !=? ""
     call camelcasemotion#CreateMotionMappings('<leader>')
