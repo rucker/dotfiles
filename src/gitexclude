@@ -12,6 +12,8 @@ Thumbs.db:encryptable
 .vscode
 
 # Custom stuff
+*.fcstd1
+*.FCStd1
 out
 spike*
 tags
