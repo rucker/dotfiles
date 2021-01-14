@@ -1,12 +1,15 @@
 set nocompatible              " be iMproved, required
 
-if !isdirectory(expand("~/.vim/bundle/Vundle.vim"))
+let vimpath = expand("~/.vim/")
+
+let vundlepath = vimpath . "bundle/Vundle.vim"
+if !isdirectory(vundlepath)
     silent !echo "Vundle is not installed. Installing Vundle..."
-    silent !mkdir -p ~/.vim/bundle
+    call mkdir(vimpath . "bundle", "p")
     silent !git clone https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/Vundle.vim
 endif
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+execute 'set rtp+=' . vundlepath
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -59,6 +62,16 @@ let g:ctrlp_max_files=0
 let g:auto_save = 1
 
 " End Plugin Settings
+
+if (has("persistent_undo"))
+    let undopath = vimpath . "undo"
+    if !isdirectory(undopath)
+        silent !echo "Creating undo dir"
+        call mkdir(undopath, "p")
+    endif
+    let &undodir = undopath
+    set undofile
+endif
 
 syntax on
 let mapleader=';'
