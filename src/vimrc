@@ -116,7 +116,7 @@ vmap Y "*y
 function SetTabs()
     if &filetype == 'make' || &filetype == 'gitconfig'
         set shiftwidth=8 tabstop=8 noexpandtab
-    elseif &filetype == 'ruby' || &filetype == 'sh' || &filetype == 'ansible' || &filetype == 'elixir'
+    elseif &filetype == 'ruby' || &filetype =~ '\w*sh' || &filetype == 'ansible' || &filetype == 'elixir'
         set shiftwidth=2 tabstop=2 expandtab
     else
         set shiftwidth=4 tabstop=4 expandtab
