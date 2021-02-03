@@ -219,6 +219,7 @@ alias lg="git lg -25"
 alias rbi="git rebase -i"
 alias gd="git diff"
 alias gls="git ls"
+alias gu="git upd"
 __do_alias "diff" "colordiff"
 __do_alias "cat" "grc cat"
 __build_ps1
