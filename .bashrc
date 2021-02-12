@@ -190,19 +190,51 @@ mkcd() {
 }
 
 latest() {
-    local dir
-    local results=11
+  local dir
+  local results
+  local USAGE="Usage: \n${FUNCNAME[0]} DIR NUMBER\n${FUNCNAME[0]} NUMBER\n${FUNCNAME[0]} DIR"
 
-    while [[ $# -ge 1 ]]; do
-        if [[ -d $1 ]]; then
-            dir=$1
-            shift
-        elif [[ -n $1 ]]; then
-            results=$(($1 + 1)) #Bump to offset ls 'total' line
-            shift
-        fi
-    done
-    ls -lAtc $dir | head -n $results
+  if [[ $# -gt 2 ]]; then
+    echo "Invalid arguments: ${@}" >&2
+    echo -e "${USAGE}" >&2
+    return 1
+  fi
+
+  if [[ $# -eq 1 ]]; then
+    if [[ -d "${1}" ]]; then
+      dir="${1}"
+    elif [[ "${1}" =~ ^[0-9]+$ ]]; then
+      results=$(("${1}" + 1)) #Bump to offset ls 'total' line
+    else
+      echo "Invalid number or dir name: ${1}" >&2
+      echo -e "${USAGE}" >&2
+      return 1
+    fi
+  fi
+
+  if [[ $# -eq 2 ]]; then
+    if [[ "${1}" =~ ^[0-9]+$ ]]; then
+      results=$(("${1}" + 1)) #Bump to offset ls 'total' line
+    else
+      echo "Invalid number: ${1}" >&2
+      echo -e "${USAGE}" >&2
+      return 1
+    fi
+    if [[ -d "${2}" ]]; then
+      dir="${2}"
+    else
+      echo "Cannot access '${2}': No such file or directory" >&2
+      echo -e "${USAGE}" >&2
+      return 1
+    fi
+  fi
+
+  [[ -z ${results} ]] && results=11
+  [[ -z ${dir} ]] && dir='.'
+  [[ $(eval file -h "${dir}") =~ 'symbolic link' ]] && dir="${dir}/"
+  [[ -z ${dir} ]] && dir="."
+
+  ls -lAtc "${dir}" | head -n $results
 }
 
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
