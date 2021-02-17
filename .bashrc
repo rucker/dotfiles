@@ -1,4 +1,3 @@
-#!/bin/bash
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # If not running interactively, don't do anything
@@ -22,16 +21,16 @@ __running_in_docker() {
 }
 
 __tmux-attach() {
-[[ ! -z $SSH_CONNECTION || $(__running_in_docker) == "true" || -z $(which tmux) || ! -z $TMUX_VERSION ]] && return
-  local OLDIFS=${IFS}
-  IFS=$':'
-  local tmux_sessions=($(tmux list-sessions))
+  [[ ! -z $SSH_CONNECTION || $(__running_in_docker) == "true" || -z $(which tmux) || ! -z $TMUX_VERSION ]] && return
+  local tmux_sessions=$(tmux list-sessions)
   if [[ -z ${tmux_sessions} ]]; then
     tmux
   else
-    tmux a -t ${tmux_sessions[0]}
+    echo -e "Existing tmux session(s) found:\n"
+    eval tmux list-sessions
+    echo -e "\nYou can attach to one of these sessions via:"
+    echo tmux a -t target-session
   fi
-  IFS=${OLDIFS}
 }
 
 __tmux-attach
