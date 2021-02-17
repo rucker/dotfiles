@@ -146,6 +146,9 @@ autocmd BufEnter *.org
 autocmd BufEnter *.gcode
     \ set filetype=nc
 
+autocmd BufEnter *bash*
+    \ let b:is_bash=1
+
 autocmd BufEnter * call SetTabs()
 autocmd BufEnter,FocusGained * checktime
 autocmd CursorHold,CursorHoldI * checktime
