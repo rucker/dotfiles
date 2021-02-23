@@ -110,12 +110,14 @@ man() {
 psgrep() {
   local OLDIFS=${IFS}
   IFS=$'\n'
-  proc=($(ps -ef | grep -v grep | grep --color=never "UID\|${1}"))
-  if [[ ${#proc[@]} > 1 ]]; then
-    for line in ${proc[@]}; do
-      echo $line
-    done
-  fi
+  proc=($(ps -ef))
+  shopt -s nocasematch
+  for p in ${proc[@]}; do
+    if [[ ${p} = UID* || ${p} =~ "${1}" ]]; then
+      echo ${p}
+    fi
+  done
+  shopt -u nocasematch
   IFS=${OLDIFS}
 }
 
