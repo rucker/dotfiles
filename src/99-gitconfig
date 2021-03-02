@@ -23,3 +23,5 @@
 	keepBackup = false
 [user]
 	name = Rick Ucker
+[diff]
+	wsErrorHighlight = old,new
