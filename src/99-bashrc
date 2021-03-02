@@ -58,6 +58,9 @@ shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+export EDITOR=vim
+export VISUAL=${EDITOR}
+
 __do_alias() {
     for prog in $(echo $2 | tr " " "\n"); do
         if [[ $prog == -* ]]; then
