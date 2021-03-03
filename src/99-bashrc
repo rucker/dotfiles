@@ -58,6 +58,9 @@ shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# Disable XON/XOFF flow control as it conflicts with readline i-search
+stty -ixon
+
 export EDITOR=vim
 export VISUAL=${EDITOR}
 
