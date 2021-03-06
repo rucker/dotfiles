@@ -21,7 +21,7 @@
 [mergetool]
 	prompt = false
 	keepBackup = false
-[user]
-	name = Rick Ucker
 [diff]
 	wsErrorHighlight = old,new
+[user]
+	name = Rick Ucker
