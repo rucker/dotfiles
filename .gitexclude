@@ -12,6 +12,7 @@ Thumbs.db:encryptable
 .vscode
 
 # Custom stuff
+*.blend1
 *.fcstd1
 *.FCStd1
 out
