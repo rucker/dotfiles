@@ -16,5 +16,5 @@ Thumbs.db:encryptable
 *.fcstd1
 *.FCStd1
 out
-spike*
+[Ss]pike*
 tags
