@@ -193,7 +193,7 @@ mkcd() {
    return 1
   fi
 
-  eval "mkdir $1 && cd $1"
+  mkdir "$1" && cd "$1"
 }
 
 latest() {
