@@ -11,6 +11,7 @@
 	clone = git-clone
 	ls = show --stat --abbrev-commit
 	upd = ! git stash && git pull && git stash pop
+	cam = commit -am
 [push]
 	default = simple
 [pull]
