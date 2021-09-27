@@ -63,6 +63,8 @@ stty -ixon
 
 export EDITOR=vim
 export VISUAL=${EDITOR}
+export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+export LS_OPTIONS="-h --color=auto --group-directories-first"
 
 __do_alias() {
     for prog in $(echo $2 | tr " " "\n"); do
@@ -244,9 +246,9 @@ latest() {
   ls -lAtc "${dir}" | head -n $results
 }
 
-export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
-
 umask 022
+
+eval `dircolors`
 
 alias grep="grep --color=auto"
 alias hgrep="history | grep"
@@ -259,6 +261,9 @@ alias rbi="git rebase -i"
 alias gd="git diff"
 alias gls="git ls"
 alias gu="git upd"
+alias ls="ls $LS_OPTIONS"
+alias ll="ls $LS_OPTIONS -l"
+alias l="ls $LS_OPTIONS -lA"
 __do_alias "diff" "colordiff"
 __do_alias "cat" "grc cat"
 __build_ps1
