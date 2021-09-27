@@ -198,6 +198,7 @@ mkcd() {
   mkdir "$1" && cd "$1"
 }
 
+# NOTE: Keep this function creation before aliasing of ls to use $LS_OPTIONS
 latest() {
   local dir
   local results
@@ -243,7 +244,9 @@ latest() {
   [[ $(eval file -h "${dir}") =~ 'symbolic link' ]] && dir="${dir}/"
   [[ -z ${dir} ]] && dir="."
 
-  ls -lAtc "${dir}" | head -n $results
+  local ls_latest_opts=$(echo $LS_OPTIONS | sed 's,--group-directories-first,,')
+
+  ls -lAtc $ls_latest_opts "${dir}" | head -n $results
 }
 
 umask 022
