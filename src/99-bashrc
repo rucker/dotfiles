@@ -251,8 +251,6 @@ latest() {
 
 umask 022
 
-eval `dircolors`
-
 alias grep="grep --color=auto"
 alias hgrep="history | grep"
 alias dmesg="dmesg -T --color=always"
