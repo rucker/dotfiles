@@ -1,4 +1,4 @@
-if [[ $(which brew) ]]; then
+if [[ $(__present brew) -eq 0 ]]; then
     brew_prefix=$(brew --prefix)
     gnubin="${brew_prefix}/opt/coreutils/libexec/gnubin"
     export PATH="${gnubin}:$PATH"

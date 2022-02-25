@@ -14,7 +14,9 @@ Thumbs.db:encryptable
 # Custom stuff
 *.blend1
 *.fcstd1
+*.fcstd.*
 *.FCStd1
+*.FCStd.*
 out
 [Ss]pike*
 tags

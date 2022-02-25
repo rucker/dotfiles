@@ -6,6 +6,10 @@ case $- in
       *) return;;
 esac
 
+__present() {
+    command -v ${1} >/dev/null 2>&1
+}
+
 # Begin auto start/attach tmux
 __running_in_docker() {
   if [[ -d /proc ]]; then
@@ -21,7 +25,7 @@ __running_in_docker() {
 }
 
 __tmux-attach() {
-  [[ ! -z $SSH_CONNECTION || $(__running_in_docker) == "true" || -z $(which tmux) || ! -z $TMUX_VERSION ]] && return
+  [[ ! -z $SSH_CONNECTION || $(__running_in_docker) == "true" || ! $(__present tmux) -ne 0 || ! -z $TMUX_VERSION ]] && return
   local tmux_sessions=$(tmux list-sessions)
   if [[ -z ${tmux_sessions} ]]; then
     tmux
@@ -70,7 +74,7 @@ __do_alias() {
     for prog in $(echo $2 | tr " " "\n"); do
         if [[ $prog == -* ]]; then
             continue
-        elif [[ $(which $prog > /dev/null 2>&1; echo $?) -ne 0 ]]; then
+        elif [[ $(__present ${prog}) -eq 0 ]]; then
             return
         fi
     done
