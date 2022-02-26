@@ -171,14 +171,18 @@ _update_repo() {
 
 _run_dfm() {
   local DFM_CMD="${DFM} ${DOTFILES_SCRIPT_DIR}/src"
-  local exclude
-  if [[ $(uname) == "Linux" || $(uname) =~ "NT" || ! -d /usr/local/opt/coreutils/libexec/gnubin/ ]]; then
-    exclude=98-bashrc_mac
+  local os_excludes
+  if [[ $(uname) =~ "Linux" ]]; then
+    os_excludes=(98-bashrc_win 98-bashrc_mac)
+  elif [[ $(uname) == "NT" ]]; then
+    os_excludes=(98-bashrc_linux 98-bashrc_mac)
+  elif [[ $(uname) == "Darwin" && -d /usr/local/opt/coreutils/libexec/gnubin/ ]]; then
+    os_excludes=(98-bashrc_win 98-bashrc_linux)
   else
-    exclude=98-bashrc_linux
+    os_excludes=(98-bashrc_win 98-bashrc_linux 98-bashrc-mac)
   fi
 
-  ${DFM_CMD} -e ${exclude} $@
+  ${DFM_CMD} ${os_excludes[@]/#/-e } $@
 
   # Update dotfiles in this repo for vanity purposes
   local args=( $@ )

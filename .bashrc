@@ -12,7 +12,7 @@ __present() {
 
 # Begin auto start/attach tmux
 __running_in_docker() {
-  if [[ -d /proc ]]; then
+  if [[ -f /proc/self/cgroup ]]; then
     awk -F/ '$2 == "docker"' /proc/self/cgroup | read
     if [[ $? -eq 0 ]]; then
       echo true
@@ -102,7 +102,8 @@ __build_ps1() {
 
     PS1="$GO_TO_FIRST_COL$YELLOW$TIMESTAMP $GREEN_BOLD\u@$hostname$BLUE_BOLD \w"
     if [[ $(type -t __git_ps1) == 'function' ]]; then
-      PS1=$PS1"$MAGENTA_BOLD\$(__git_ps1)"
+      local branchname=$(__git_ps1)
+      PS1=$PS1"$MAGENTA_BOLD${branchname}"
     fi
     export PS1=$PS1"$BLUE_BOLD\n\$$DEFAULT_COLOR "
 }
