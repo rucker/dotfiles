@@ -174,12 +174,12 @@ _run_dfm() {
   local os_excludes
   if [[ $(uname) =~ "Linux" ]]; then
     os_excludes=(98-bashrc_win 98-bashrc_mac)
-  elif [[ $(uname) == "NT" ]]; then
+  elif [[ $(uname) =~ "NT" ]]; then
     os_excludes=(98-bashrc_linux 98-bashrc_mac)
   elif [[ $(uname) == "Darwin" && -d /usr/local/opt/coreutils/libexec/gnubin/ ]]; then
     os_excludes=(98-bashrc_win 98-bashrc_linux)
   else
-    os_excludes=(98-bashrc_win 98-bashrc_linux 98-bashrc-mac)
+    os_excludes=(98-bashrc_win 98-bashrc_linux 98-bashrc_mac)
   fi
 
   ${DFM_CMD} ${os_excludes[@]/#/-e } $@

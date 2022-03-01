@@ -1,2 +1,4 @@
 export MSYS=winsymlinks:nativestrict
+export SHELL=/bin/bash
+eval `dircolors`
 

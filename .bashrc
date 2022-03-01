@@ -74,7 +74,7 @@ __do_alias() {
     for prog in $(echo $2 | tr " " "\n"); do
         if [[ $prog == -* ]]; then
             continue
-        elif [[ $(__present ${prog}) ]]; then
+        elif [[ ! $(__present ${prog}) ]]; then
             return
         fi
     done
