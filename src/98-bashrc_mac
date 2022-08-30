@@ -1,8 +1,8 @@
-if [[ $(__present brew) ]]; then
-    brew_prefix=$(brew --prefix)
-    gnubin="${brew_prefix}/opt/coreutils/libexec/gnubin"
-    export PATH="${gnubin}:$PATH"
-    export MANPATH="${brew_prefix}/opt/coreutils/libexec/gnuman:$MANPATH"
+if [[ $(__present brew) -eq 0 ]]; then
+  brew_prefix=$(brew --prefix)
+  gnubin="${brew_prefix}/opt/coreutils/libexec/gnubin"
+  export PATH="${gnubin}:$PATH"
+  export MANPATH="${brew_prefix}/opt/coreutils/libexec/gnuman:$MANPATH"
 fi
 
 alias fixwifi="networksetup -setairportpower en0 off && networksetup -setairportpower en0 on"

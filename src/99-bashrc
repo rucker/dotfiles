@@ -7,7 +7,8 @@ case $- in
 esac
 
 __present() {
-    command -v ${1} >/dev/null 2>&1
+  command -v ${1} >/dev/null 2>&1
+  echo $?
 }
 
 # Begin auto start/attach tmux
@@ -25,7 +26,7 @@ __running_in_docker() {
 }
 
 __tmux-attach() {
-  [[ ! -z $SSH_CONNECTION || $(__running_in_docker) == "true" || ! $(__present tmux) || ! -z $TMUX_VERSION ]] && return
+  [[ ! -z $SSH_CONNECTION || $(__running_in_docker) == "true" || $(__present tmux) -ne 0 || ! -z $TMUX_VERSION ]] && return
   local tmux_sessions=$(tmux list-sessions)
   if [[ -z ${tmux_sessions} ]]; then
     tmux
@@ -74,7 +75,7 @@ __do_alias() {
     for prog in $(echo $2 | tr " " "\n"); do
         if [[ $prog == -* ]]; then
             continue
-        elif [[ ! $(__present ${prog}) ]]; then
+        elif [[ $(__present ${prog}) -ne 0 ]]; then
             return
         fi
     done

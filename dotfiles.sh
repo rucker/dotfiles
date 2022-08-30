@@ -45,6 +45,11 @@ _get_dfm_opts() {
   DFM_OPTS=($(${DFM} --help | grep -v -E "\[" | grep -o -- "\s[-]\+[A-Za-z|-]\+"))
 }
 
+__present() {
+  command -v ${1} >/dev/null 2>&1
+  echo $?
+}
+
 _set_opts() {
   while [[ $# -ge 1 ]]; do
     arg="$1"
@@ -176,7 +181,7 @@ _run_dfm() {
     os_excludes=(98-bashrc_win 98-bashrc_mac)
   elif [[ $(uname) =~ "NT" ]]; then
     os_excludes=(98-bashrc_linux 98-bashrc_mac)
-  elif [[ $(uname) == "Darwin" && -d /usr/local/opt/coreutils/libexec/gnubin/ ]]; then
+  elif [[ $(uname) == "Darwin" && $(__present brew) -eq 0 ]]; then
     os_excludes=(98-bashrc_win 98-bashrc_linux)
   else
     os_excludes=(98-bashrc_win 98-bashrc_linux 98-bashrc_mac)
