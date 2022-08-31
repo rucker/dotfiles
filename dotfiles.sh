@@ -181,7 +181,7 @@ _run_dfm() {
     os_excludes=(98-bashrc_win 98-bashrc_mac)
   elif [[ $(uname) =~ "NT" ]]; then
     os_excludes=(98-bashrc_linux 98-bashrc_mac)
-  elif [[ $(uname) == "Darwin" && $(__present brew) -eq 0 ]]; then
+  elif [[ $(uname) == "Darwin" ]]; then
     os_excludes=(98-bashrc_win 98-bashrc_linux)
   else
     os_excludes=(98-bashrc_win 98-bashrc_linux 98-bashrc_mac)

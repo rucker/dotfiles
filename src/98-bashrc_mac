@@ -1,4 +1,12 @@
-[[ $(__present brew) -eq 0 ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+apple_silicon_brew="/opt/homebrew/bin/brew"
+intel_brew="/usr/local/bin/brew"
+if [[ -f ${apple_silicon_brew} ]]; then
+  eval "$(${apple_silicon_brew} shellenv)"
+  export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin${PATH+:$PATH}";
+elif [[ -f ${intel_brew} ]]; then
+  export PATH="/usr/local/opt/coreutils/libexec/gnubin${PATH+:$PATH}";
+  eval "$(${intel_brew} shellenv)"
+fi
 
 alias fixwifi="networksetup -setairportpower en0 off && networksetup -setairportpower en0 on"
 
