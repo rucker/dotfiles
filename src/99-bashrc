@@ -91,20 +91,19 @@ __source_in_dir() {
 }
 
 __build_ps1() {
-    GO_TO_FIRST_COL="\[\033[G\]"
-    GREEN_BOLD="\[\033[1;32m\]"
-    BLUE_BOLD="\[\033[1;34m\]"
-    MAGENTA_BOLD="\[\033[1;35m\]"
-    YELLOW="\[\033[0;33m\]"
-    DEFAULT_COLOR="\[\033[00m\]"
-    TIMESTAMP="[\D{%Y-%m-%d} \t]"
+   local GO_TO_FIRST_COL="\[\033[G\]"
+   local GREEN_BOLD="\[\033[1;32m\]"
+   local BLUE_BOLD="\[\033[1;34m\]"
+   local MAGENTA_BOLD="\[\033[1;35m\]"
+   local YELLOW="\[\033[0;33m\]"
+   local DEFAULT_COLOR="\[\033[00m\]"
+   local TIMESTAMP="[\D{%Y-%m-%d} \t]"
 
     $(__running_in_docker) -eq true && hostname="docker" || hostname="\h"
 
     PS1="$GO_TO_FIRST_COL$YELLOW$TIMESTAMP $GREEN_BOLD\u@$hostname$BLUE_BOLD \w"
     if [[ $(type -t __git_ps1) == 'function' ]]; then
-      local branchname=$(__git_ps1)
-      PS1=$PS1"$MAGENTA_BOLD${branchname}"
+      PS1="$PS1$MAGENTA_BOLD\$(__git_ps1)"
     fi
     export PS1=$PS1"$BLUE_BOLD\n\$$DEFAULT_COLOR "
 }
@@ -274,4 +273,4 @@ alias ll="ls $LS_OPTIONS -l"
 alias l="ls $LS_OPTIONS -lA"
 __do_alias "diff" "colordiff"
 __do_alias "cat" "grc cat"
-__build_ps1
+export PATH=$HOME/bin:$PATH
