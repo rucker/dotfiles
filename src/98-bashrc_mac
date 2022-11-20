@@ -2,9 +2,11 @@ apple_silicon_brew="/opt/homebrew/bin/brew"
 intel_brew="/usr/local/bin/brew"
 if [[ -f ${apple_silicon_brew} ]]; then
   eval "$(${apple_silicon_brew} shellenv)"
-  export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin${PATH+:$PATH}";
+  gnubin="/opt/homebrew/opt/coreutils/libexec/gnubin"
+  [[ -d ${gnubin} ]] && export PATH="${gnubin}${PATH+:$PATH}";
 elif [[ -f ${intel_brew} ]]; then
-  export PATH="/usr/local/opt/coreutils/libexec/gnubin${PATH+:$PATH}";
   eval "$(${intel_brew} shellenv)"
+  gnubin="/usr/local/opt/coreutils/libexec/gnubin"
+  [[ -d ${gnubin} ]] && export PATH="$gnubin${PATH+:$PATH}";
 fi
 
