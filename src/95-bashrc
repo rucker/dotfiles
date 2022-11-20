@@ -1,0 +1,5 @@
+scripts_dir="$HOME/repos/dotfiles/src/scripts"
+__source_in_dir $scripts_dir"/sourced/"
+__source_in_dir $scripts_dir"/sourced-local/"
+__build_ps1
+

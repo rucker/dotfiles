@@ -178,13 +178,13 @@ _run_dfm() {
   local DFM_CMD="${DFM} ${DOTFILES_SCRIPT_DIR}/src"
   local os_excludes
   if [[ $(uname) =~ "Linux" ]]; then
-    os_excludes=(98-bashrc_win 98-bashrc_mac)
+    os_excludes=(96-bashrc_win 98-bashrc_mac 96-bashrc_mac)
   elif [[ $(uname) =~ "NT" ]]; then
-    os_excludes=(98-bashrc_linux 98-bashrc_mac)
+    os_excludes=(96-bashrc_linux 98-bashrc_mac 96-bashrc_mac)
   elif [[ $(uname) == "Darwin" ]]; then
-    os_excludes=(98-bashrc_win 98-bashrc_linux)
+    os_excludes=(96-bashrc_win 96-bashrc_linux)
   else
-    os_excludes=(98-bashrc_win 98-bashrc_linux 98-bashrc_mac)
+    os_excludes=(96-bashrc_win 96-bashrc_linux 98-bashrc_mac 96-bashrc_mac)
   fi
 
   ${DFM_CMD} ${os_excludes[@]/#/-e } $@
@@ -199,7 +199,7 @@ _run_dfm() {
     fi
     ((idx++))
   done
-  local known_excludes=( 98-bashrc_linux 98-bashrc_mac 98-bashrc_win )
+  local known_excludes=( 96-bashrc_linux 98-bashrc_mac 96-bashrc_mac 96-bashrc_win )
   local local_excludes=($(echo $(cd "${DOTFILES_SCRIPT_DIR}/src" && ls *_local)))
   ${DFM_CMD} --no-symlinks ${known_excludes[@]/#/-e } ${local_excludes[@]/#/-e } -o ${DOTFILES_SCRIPT_DIR} ${args[@]}
 }
