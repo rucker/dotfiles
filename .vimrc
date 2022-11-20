@@ -22,7 +22,9 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'pearofducks/ansible-vim'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'elixir-editors/vim-elixir'
-Plugin 'ludovicchabant/vim-gutentags'
+if executable('ctags')
+    Plugin 'ludovicchabant/vim-gutentags'
+endif
 Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
 Plugin 'zigford/vim-powershell'
@@ -88,7 +90,9 @@ set splitbelow
 set backspace=indent,eol,start
 set shell=bash\ --login
 set background=dark
-set cscopetag
+if executable('ctags')
+    set cscopetag
+endif
 " search for visual selection with //
 vnoremap // y/<c-r>"<cr>
 imap jj <esc>
