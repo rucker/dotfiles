@@ -84,14 +84,14 @@ _set_opts() {
 
 _install() {
   echo Installing...
-  local repos_dir=$(dirname $(dirname $(realpath BASH_SOURCE[0])))
+  local parent_dir=$(dirname $(dirname $(realpath ${BASH_SOURCE[0]})))
 
-  if [[ ! -d ${repos_dir} ]]; then
-    echo Creating ${repos_dir}
-    mkdir ${repos_dir}
+  if [[ ! -d ${parent_dir} ]]; then
+    echo Creating ${parent_dir}
+    mkdir ${parent_dir}
   fi
 
-  pushd ${repos_dir} 2>&1 > /dev/null
+  pushd ${parent_dir} 2>&1 > /dev/null
 
   if [[ ! -d dotfiles-manager ]]; then
     echo Cloning Dotfiles Manager
@@ -105,14 +105,14 @@ _install() {
   fi
 
   if [[ -z $(readlink ${DFM}) ]]; then
-    local dfm_link_target=${repos_dir}/dotfiles-manager/dotfilesmanager/dfm.py
+    local dfm_link_target=${parent_dir}/dotfiles-manager/dotfilesmanager/dfm.py
     echo "Linking ${DFM} -> ${dfm_link_target}"
     ln -s ${dfm_link_target} ${DFM}
   fi
 
   local dotfiles_link=${home_bin}/dotfiles
   if [[ -z $(readlink ${dotfiles_link}) ]]; then
-    local dotfiles_link_target=${repos_dir}/dotfiles/${THIS_SCRIPT}
+    local dotfiles_link_target=${parent_dir}/dotfiles/${THIS_SCRIPT}
     echo "Linking ${dotfiles_link} -> ${dotfiles_link_target}"
     ln -s ${dotfiles_link_target} ${home_bin}/dotfiles
   fi
