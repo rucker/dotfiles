@@ -265,4 +265,4 @@ alias ll="ls $LS_OPTIONS -l"
 alias l="ls $LS_OPTIONS -lA"
 __do_alias "diff" "colordiff"
 __do_alias "cat" "grc cat"
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$HOME/.emacs.d/bin:$PATH
