@@ -200,7 +200,7 @@ _run_dfm() {
     ((idx++))
   done
   local known_excludes=( 96-bashrc_linux 98-bashrc_mac 96-bashrc_mac 96-bashrc_win doom.d backups scripts snippets )
-  local local_excludes=($(echo $(cd "${DOTFILES_SCRIPT_DIR}/src" && ls *_local)))
+  local local_excludes=($(echo $(cd "${DOTFILES_SCRIPT_DIR}/src" && ls *_local 2>/dev/null)))
   ${DFM_CMD} --no-symlinks ${known_excludes[@]/#/-e } ${local_excludes[@]/#/-e } -o ${DOTFILES_SCRIPT_DIR} ${args[@]}
 }
 
