@@ -30,6 +30,7 @@ Plugin 'tpope/vim-speeddating'
 Plugin 'zigford/vim-powershell'
 Plugin 'vim-scripts/nc.vim--Eno'
 Plugin 'vim-scripts/vim-auto-save'
+Plugin 'rucker/utl.vim'
 
 " All of your Plugins must be added before the following line
 filetype off
