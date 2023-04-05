@@ -246,7 +246,7 @@ latest() {
 
   [[ -z ${results} ]] && results=11
   [[ -z ${dir} ]] && dir='.'
-  [[ $(eval file -h "${dir}") =~ 'symbolic link' ]] && dir="${dir}/"
+  [[ $(file -h "${dir}") =~ 'symbolic link' ]] && dir="${dir}/"
   [[ -z ${dir} ]] && dir="."
 
   local ls_latest_opts=$(echo $LS_OPTIONS | sed 's,--group-directories-first,,')
