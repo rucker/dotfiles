@@ -187,12 +187,21 @@ up() {
 }
 
 mkcd() {
-  if [[ -z $1 ]]; then
+  if [[ "$#" -ne 1 ]]; then
    >&2 echo "Usage: mkcd DIRNAME"
    return 1
   fi
 
   mkdir "$1" && cd "$1"
+}
+
+mvcd() {
+  if [[ "$#" -ne 2 ]]; then
+   >&2 echo "Usage: mvcd SOURCE DESTINATION"
+   return 1
+  fi
+
+  mv "$1" "$2" && cd "$2"
 }
 
 # NOTE: Keep this function creation before aliasing of ls to use $LS_OPTIONS
