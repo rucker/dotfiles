@@ -8,7 +8,7 @@
     st = status
     br = branch
     rbi = rebase -i
-	clone = git-clone
+	cl = git-clone
 	ls = show --stat --abbrev-commit
 	upd = ! git stash && git pull && git stash pop
 	cam = commit -am
