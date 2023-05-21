@@ -204,12 +204,31 @@ mkcd() {
 }
 
 mvcd() {
-  if [[ "$#" -ne 2 ]]; then
-   >&2 echo "Usage: mvcd SOURCE DESTINATION"
-   return 1
+  local usage="Usage: mvcd [name|pattern] dest"
+  local file_args=()
+  local dest
+
+  if [[ "$#" -lt 2 ]]; then
+    >&2 echo ${usage}
+    return 1
   fi
 
-  mv "$1" "$2" && cd "$2"
+  while [[ "$#" -gt 0 ]]; do
+    if [[ -f "${1}" ]]; then
+      file_args+=(${1})
+      shift
+      continue
+    elif [[ -d ${1} ]]; then
+      dest=${1}
+      shift
+      continue
+    else
+      >&2 echo ${usage}
+      return 1
+    fi
+  done
+
+  mv "${file_args[@]}" "${dest}" && cd "${dest}"
 }
 
 # NOTE: Keep this function creation before aliasing of ls to use $LS_OPTIONS
