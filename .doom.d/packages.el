@@ -50,3 +50,5 @@
 ;(unpin! t)
 
 (package! lua-mode)
+(package! yaml-mode)
+(package! ansible)
