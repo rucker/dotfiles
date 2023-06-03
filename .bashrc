@@ -299,6 +299,7 @@ alias gcam="git cam"
 alias ls="ls $LS_OPTIONS"
 alias ll="ls $LS_OPTIONS -l"
 alias l="ls $LS_OPTIONS -lA"
+alias resolution="mediainfo --Inform='Video;%Width%X%Height%'"
 __do_alias "diff" "colordiff"
 __do_alias "cat" "grc cat"
 export PATH=$HOME/bin:$HOME/.emacs.d/bin:$PATH
