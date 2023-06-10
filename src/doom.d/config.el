@@ -93,7 +93,7 @@
 ;;; - https://emacs.stackexchange.com/q/27459/12534
 
 ;; <return> is for windowed Emacs; RET is for terminal Emacs
-(dolist (key '("<return>" "RET"))
+(after! company (dolist (key '("<return>" "RET"))
 ;; Here we are using an advanced feature of define-key that lets
 ;; us pass an "extended menu item" instead of an interactive
 ;; function. Doing this allows RET to regain its usual
@@ -109,7 +109,7 @@
 
 ;; Company appears to override the above keymap based on company-auto-complete-chars.
 ;; Turning it off ensures we have full control.
-(setq company-auto-complete-chars nil)
+(setq company-insertion-triggers nil))
 
 ;; (require 'yaml-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
