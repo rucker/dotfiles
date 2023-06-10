@@ -213,21 +213,27 @@ mvcd() {
     return 1
   fi
 
-  while [[ "$#" -gt 0 ]]; do
-    if [[ -f "${1}" ]]; then
-      file_args+=(${1})
-      shift
-      continue
-    elif [[ -d ${1} ]]; then
-      dest=${1}
-      shift
-      continue
-    else
-      >&2 echo ${usage}
-      return 1
-    fi
-  done
+  if [[ "$#" -eq 2 ]]; then
+    file_args+=("${1}")
+    dest="${2}"
+  else
+    while [[ "$#" -gt 0 ]]; do
+      if [[ -f "${1}" ]]; then
+        file_args+=("${1}")
+        shift
+        continue
+      elif [[ -d "${1}" ]]; then
+        dest="${1}"
+        shift
+        continue
+      else
+        >&2 echo ${usage}
+        return 1
+      fi
+    done
+  fi
 
+  echo "${file_args[@]}" "${dest}"
   mv "${file_args[@]}" "${dest}" && cd "${dest}"
 }
 
