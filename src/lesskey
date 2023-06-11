@@ -1,0 +1,6 @@
+#command
+/ forw-search ^W
+? back-search ^W
+#env
+LESS = -iR
+#version >= 595 LESS += --use-color --color=Hkc
