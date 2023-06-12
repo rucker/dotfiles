@@ -124,11 +124,15 @@ psgrep() {
   local OLDIFS=${IFS}
   IFS=$'\n'
   proc=($(ps -ef))
+  echo ${proc[0]}
+  let idx=1
   shopt -s nocasematch
-  for p in ${proc[@]}; do
-    if [[ ${p} = UID* || ${p} =~ "${1}" ]]; then
-      echo ${p}
-    fi
+  while [[ ${idx} -lt ${#proc[@]} ]]; do
+    p=${proc[${idx}]}
+      if [[ ${p} =~ ${1} ]]; then
+        echo ${p} | grep --color=always ${1}
+      fi
+      ((idx++))
   done
   shopt -u nocasematch
   IFS=${OLDIFS}
