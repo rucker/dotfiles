@@ -61,7 +61,7 @@ stty -ixon
 export EDITOR=vim
 export VISUAL=${EDITOR}
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
-export LS_OPTIONS="-h --color=auto --group-directories-first"
+export LS_OPTIONS="-h --color --group-directories-first"
 
 __do_alias() {
     for prog in $(echo $2 | tr " " "\n"); do
