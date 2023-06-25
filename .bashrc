@@ -243,12 +243,14 @@ mvcd() {
 
 # NOTE: Keep this function creation before aliasing of ls to use $LS_OPTIONS
 latest() {
-  local dir
+  local dirs=()
   local results
   local opts
-  local USAGE="Usage: ${FUNCNAME[0]} [-h | --help] [-a | --all] [NUMBER] [DIR]\nList most recently "
-  USAGE+="modified entries in DIR (default '.'), limited to NUMBER of results (default 10)."
-  USAGE+="\nNote: -a --all is equivalent to the ls option -A --almost-all."
+  local USAGE="Usage: latest [OPTION]... [DIR]... [NUMBER]\n"
+  USAGE+="List most recently modified entries in DIR(s) (the current directory by default), "
+  USAGE+="limited to NUMBER of results (10 by default).\n"
+  USAGE+="  -a --all\tEquivalent to ls -A --almost-all\n"
+  USAGE+="  -h --help\tDisplay this help message"
 
   while [[ $# -gt 0 ]]; do
     case ${1} in
@@ -262,11 +264,11 @@ latest() {
         ;;
       *)
         if [[ -d "${1}" ]]; then
-          dir="${1}"
+          dirs+=("${1}")
         elif [[ "${1}" =~ ^[0-9]+$ ]]; then
           results=$(("${1}" + 1)) #Bump to offset ls 'total' line
         else
-          echo "Invalid number or dir name: ${1}" >&2
+          echo "Invalid parameter: ${1}" >&2
           echo -e "${USAGE}" >&2
           return 1
         fi
@@ -276,13 +278,18 @@ latest() {
   done
 
   [[ -z ${results} ]] && results=11
-  [[ -z ${dir} ]] && dir='.'
-  [[ $(file -h "${dir}") =~ 'symbolic link' ]] && dir="${dir}/"
-  [[ -z ${dir} ]] && dir="."
+  [[ -z ${dirs} ]] && dirs+=('.')
 
   local ls_latest_opts=$(echo $LS_OPTIONS | sed 's,--group-directories-first,,')
 
-  ls -ltc${opts} ${ls_latest_opts} "${dir}" | head -n ${results}
+  let idx=0
+  for dir in ${dirs[@]}; do
+    [[ ${idx} -gt 0 ]] && echo ""
+    echo ${dir}:
+    [[ $(file -h "${dir}") =~ 'symbolic link' ]] && dir="${dir}/"
+    ls -ltc${opts} ${ls_latest_opts} "${dir}" | head -n ${results}
+    ((idx++))
+  done
 }
 
 umask 022
