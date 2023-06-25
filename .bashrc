@@ -259,11 +259,10 @@ latest() {
       -a|--all)
         opts+=A
         shift
-        break
         ;;
       *)
         if [[ -d "${1}" ]]; then
-          dir+="${1}"
+          dir="${1}"
         elif [[ "${1}" =~ ^[0-9]+$ ]]; then
           results=$(("${1}" + 1)) #Bump to offset ls 'total' line
         else
@@ -272,38 +271,9 @@ latest() {
           return 1
         fi
         shift
-        ;;
+      ;;
     esac
   done
-
-  if [[ $# -eq 1 ]]; then
-    if [[ -d "${1}" ]]; then
-      dir="${1}"
-    elif [[ "${1}" =~ ^[0-9]+$ ]]; then
-      results=$(("${1}" + 1)) #Bump to offset ls 'total' line
-    else
-      echo "Invalid number or dir name: ${1}" >&2
-      echo -e "${USAGE}" >&2
-      return 1
-    fi
-  fi
-
-  if [[ $# -eq 2 ]]; then
-    if [[ "${1}" =~ ^[0-9]+$ ]]; then
-      results=$(("${1}" + 1)) #Bump to offset ls 'total' line
-    else
-      echo "Invalid number: ${1}" >&2
-      echo -e "${USAGE}" >&2
-      return 1
-    fi
-    if [[ -d "${2}" ]]; then
-      dir="${2}"
-    else
-      echo "Cannot access '${2}': No such file or directory" >&2
-      echo -e "${USAGE}" >&2
-      return 1
-    fi
-  fi
 
   [[ -z ${results} ]] && results=11
   [[ -z ${dir} ]] && dir='.'
@@ -312,7 +282,7 @@ latest() {
 
   local ls_latest_opts=$(echo $LS_OPTIONS | sed 's,--group-directories-first,,')
 
-  ls -ltc${opts} $ls_latest_opts "${dir}" | head -n $results
+  ls -ltc${opts} ${ls_latest_opts} "${dir}" | head -n ${results}
 }
 
 umask 022
