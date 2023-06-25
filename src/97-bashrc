@@ -237,13 +237,36 @@ mvcd() {
 latest() {
   local dir
   local results
-  local USAGE="Usage: \n${FUNCNAME[0]} DIR NUMBER\n${FUNCNAME[0]} NUMBER\n${FUNCNAME[0]} DIR"
+  local opts
+  local USAGE="Usage: ${FUNCNAME[0]} [-h | --help] [-a | --all] [NUMBER] [DIR]\nList most recently "
+  USAGE+="modified entries in DIR (default '.'), limited to NUMBER of results (default 10)."
+  USAGE+="\nNote: -a --all is equivalent to the ls option -A --almost-all."
 
-  if [[ $# -gt 2 ]]; then
-    echo "Invalid arguments: ${@}" >&2
-    echo -e "${USAGE}" >&2
-    return 1
-  fi
+  while [[ $# -gt 0 ]]; do
+    case ${1} in
+      -h|--help)
+        echo -e ${USAGE}
+        return 0
+        ;;
+      -a|--all)
+        opts+=A
+        shift
+        break
+        ;;
+      *)
+        if [[ -d "${1}" ]]; then
+          dir+="${1}"
+        elif [[ "${1}" =~ ^[0-9]+$ ]]; then
+          results=$(("${1}" + 1)) #Bump to offset ls 'total' line
+        else
+          echo "Invalid number or dir name: ${1}" >&2
+          echo -e "${USAGE}" >&2
+          return 1
+        fi
+        shift
+        ;;
+    esac
+  done
 
   if [[ $# -eq 1 ]]; then
     if [[ -d "${1}" ]]; then
@@ -281,7 +304,7 @@ latest() {
 
   local ls_latest_opts=$(echo $LS_OPTIONS | sed 's,--group-directories-first,,')
 
-  ls -lAtc $ls_latest_opts "${dir}" | head -n $results
+  ls -ltc${opts} $ls_latest_opts "${dir}" | head -n $results
 }
 
 umask 022
