@@ -2,5 +2,8 @@
 / forw-search ^W
 ? back-search ^W
 #env
-LESS = -iR
+# Note: when -j was last on this line, something went wrong with arg parsing.
+# Less would interpret the first 'o' in color to be the -ofilename logfile arg
+# and create a file in the current dir named 'lor --color=Hkc'
+LESS = -j.1 -iR
 #version >= 595 LESS += --use-color --color=Hkc
