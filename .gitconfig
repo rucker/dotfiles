@@ -13,6 +13,7 @@
 	ls = show --stat --abbrev-commit
 	upd = ! git stash && git pull && git stash pop
 	cam = commit -am
+	cane = commit --amend --no-edit
 [push]
 	default = simple
 [pull]
