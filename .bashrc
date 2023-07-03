@@ -311,7 +311,7 @@ alias ls="ls $LS_OPTIONS"
 alias ll="ls $LS_OPTIONS -l"
 alias l="ls $LS_OPTIONS -lA"
 alias resolution="mediainfo --Inform='Video;%Width%X%Height%'"
-__do_alias "diff" "colordiff"
+alias diff="diff --color"
 __do_alias "cat" "grc cat"
 export PATH=$HOME/bin:$HOME/.emacs.d/bin:$PATH
 scripts_dir="$HOME/repos/dotfiles/src/scripts"
