@@ -85,6 +85,8 @@ set autoread					" reload file when modified on disk
 set ls=2						" always show status line
 set showmatch					" match braces/parenthesis
 set hlsearch					" highlight search match
+set ignorecase
+set smartcase
 set wildmenu					" horizontal menu for file autocomplete
 set splitright
 set splitbelow
