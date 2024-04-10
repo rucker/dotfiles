@@ -97,7 +97,7 @@ __build_ps1() {
     if [[ $(type -t __git_ps1) == 'function' ]]; then
       PS1="$PS1$MAGENTA_BOLD\$(__git_ps1)"
     fi
-    export PS1=$PS1"$BLUE_BOLD\n\$$DEFAULT_COLOR "
+    export PS1=$PS1"$BLUE_BOLD\012\$$DEFAULT_COLOR "
 }
 
 man() {
