@@ -1,6 +1,7 @@
 " Use ctrl-a and ctrl-e as an IDE shortcut in insert mode
 sethandler <C-A> n-v:vim i:ide
 sethandler <C-E> n-v:vim i:ide
+sethandler <C-K> n-v:vim i:ide
 
 set ignorecase
 set smartcase
