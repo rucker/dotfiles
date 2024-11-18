@@ -2,5 +2,6 @@ __do_alias "pbcopy" "xclip -selection c"
 alias gimme="sudo apt-get install"
 alias remove="sudo apt-get remove"
 export TMPDIR=/tmp
+export GROFF_NO_SGR=true # https://unix.stackexchange.com/a/108840
 
 eval `dircolors`

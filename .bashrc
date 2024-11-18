@@ -108,18 +108,6 @@ __build_ps1() {
     export PS1=$PS1"$BLUE_BOLD\012\$$DEFAULT_COLOR "
 }
 
-man() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-            man "$@"
-}
-
 psgrep() {
   local OLDIFS=${IFS}
   IFS=$'\n'
@@ -314,6 +302,13 @@ alias resolution="mediainfo --Inform='Video;%Width%X%Height%'"
 alias diff="diff --color"
 __do_alias "cat" "grc cat"
 export PATH=$HOME/bin:$HOME/.emacs.d/bin:$PATH
+export LESS_TERMCAP_mb=$(printf "\e[1;31m")
+export LESS_TERMCAP_md=$(printf "\e[1;31m")
+export LESS_TERMCAP_me=$(printf "\e[0m")
+export LESS_TERMCAP_se=$(printf "\e[0m")
+export LESS_TERMCAP_so=$(printf "\e[1;44;33m")
+export LESS_TERMCAP_ue=$(printf "\e[0m")
+export LESS_TERMCAP_us=$(printf "\e[1;32m")
 scripts_dir="$HOME/repos/dotfiles/src/scripts"
 __source_in_dir $scripts_dir"/sourced/"
 __source_in_dir $scripts_dir"/sourced-local/"
