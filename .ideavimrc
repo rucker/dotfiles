@@ -2,6 +2,8 @@
 sethandler <C-A> n-v:vim i:ide
 sethandler <C-E> n-v:vim i:ide
 sethandler <C-K> n-v:vim i:ide
+sethandler <C-W> n-v:vim i:ide
 
 set ignorecase
 set smartcase
+set relativenumber
