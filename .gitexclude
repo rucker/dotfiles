@@ -11,6 +11,9 @@ Thumbs.db:encryptable
 .vs
 .vscode
 
+# Other tooling
+.claude
+
 # Custom stuff
 *.blend1
 *.fcstd1
