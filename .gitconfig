@@ -12,6 +12,7 @@
 	cl = git-clone
 	ls = show --stat --abbrev-commit
 	upd = ! git stash && git pull && git stash pop
+	cm = commit -m
 	cam = commit -am
 	cane = commit --amend --no-edit
 [push]
