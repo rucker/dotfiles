@@ -294,7 +294,7 @@ alias l="ls $LS_OPTIONS -lA"
 alias resolution="mediainfo --Inform='Video;%Width%X%Height%'"
 alias diff="diff --color"
 __do_alias "cat" "grc cat"
-export PATH=$HOME/bin:$HOME/.emacs.d/bin:$PATH
+export PATH=$HOME/bin:$PATH
 export LESS_TERMCAP_mb=$(printf "\e[1;31m")
 export LESS_TERMCAP_md=$(printf "\e[1;31m")
 export LESS_TERMCAP_me=$(printf "\e[0m")
