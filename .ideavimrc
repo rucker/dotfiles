@@ -7,3 +7,17 @@ sethandler <C-W> n-v:vim i:ide
 set ignorecase
 set smartcase
 set relativenumber
+
+" Source: https://youtrack.jetbrains.com/issue/VIM-1693/Add-support-for-autocmd#focus=Comments-27-12413122.0-0
+" Until we get autocmd in IdeaVim we need to toggle manually
+function! ToggleLineNumbers()
+  if (&relativenumber == 1)
+    set norelativenumber
+    set number
+  else
+    set relativenumber
+    set number
+  endif
+endfunction
+
+nnoremap <F3> :call ToggleLineNumbers() <CR>
