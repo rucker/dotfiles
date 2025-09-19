@@ -13,6 +13,7 @@ Thumbs.db:encryptable
 
 # Other tooling
 .claude
+CLAUDE.md
 
 # Custom stuff
 *.blend1
