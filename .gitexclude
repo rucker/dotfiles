@@ -21,6 +21,7 @@ CLAUDE.md
 *.fcstd.*
 *.FCStd1
 *.FCStd.*
+*.FCBak
 out
 [Ss]pike*
 tags
