@@ -4,7 +4,6 @@ declare -a ARGS
 declare DOTFILES_SCRIPT_DIR
 NO_PULL=false
 THIS_SCRIPT=$(echo $(basename $([ -L $0 ] && readlink -f $0 || echo $0)))
-DFM=${HOME}/bin/dfm
 declare DFM_OPTS
 SCRIPT_OPTS=(-h --help -i --install --no-pull)
 
@@ -15,34 +14,27 @@ _usage() {
 
 main() {
   if [[ $@ =~ -i || $@ =~ --install ]]; then
-    _install
+    _check_dependencies
     exit
   fi
 
-  if [[ ! -e ${DFM} ]]; then
-    echo "dfm not found in ${HOME}/bin. Run with -i | --install to install."
-    _usage
-    exit 1
-  else
-    _get_dfm_opts
-    _set_opts "$@"
-  fi
+  # Always check dependencies (dfm must be in PATH)
+  _check_dependencies
+  _get_dfm_opts
+  _set_opts "$@"
 
   DOTFILES_SCRIPT_DIR=$(realpath $(dirname $([ -L $0 ] && readlink -f $0 || echo $0)))
   if [[ $NO_PULL = false ]]; then
-    echo Updating repos...
-    repos=( ${DOTFILES_SCRIPT_DIR} $(dirname $(readlink ${DFM})) )
-    for repo in ${repos[@]}; do
-      _update_repo ${repo}
-    done
-    echo -e "Updates complete. Running dfm \n"
+    echo Updating dotfiles repo...
+    _update_repo ${DOTFILES_SCRIPT_DIR}
+    echo -e "Update complete. Running dfm \n"
   fi
 
   _run_dfm "${ARGS[@]}"
 }
 
 _get_dfm_opts() {
-  DFM_OPTS=($(${DFM} --help | grep -v -E "\[" | grep -o -- "\s[-]\+[A-Za-z|-]\+"))
+  DFM_OPTS=($(dfm --help | grep -v -E "\[" | grep -o -- "\s[-]\+[A-Za-z|-]\+"))
 }
 
 __present() {
@@ -82,46 +74,40 @@ _set_opts() {
   done
 }
 
-_install() {
-  echo Installing...
-  local parent_dir=$(dirname $(dirname $(realpath ${BASH_SOURCE[0]})))
+_check_dependencies() {
+  echo "Checking dependencies..."
 
-  if [[ ! -d ${parent_dir} ]]; then
-    echo Creating ${parent_dir}
-    mkdir ${parent_dir}
+  # Check if dfm is installed
+  if ! command -v dfm &> /dev/null; then
+    cat <<'EOF'
+ERROR: 'dfm' command not found.
+
+Please install dotfiles-manager:
+  git clone https://github.com/rucker/dotfiles-manager.git
+  cd dotfiles-manager
+  python -m pip install --user -e .
+
+This installs to ~/.local/bin/dfm (ensure ~/.local/bin is in your PATH)
+
+Or install from PyPI (when available):
+  python -m pip install --user dotfiles-manager
+EOF
+    exit 1
   fi
 
-  pushd ${parent_dir} 2>&1 > /dev/null
-
-  if [[ ! -d dotfiles-manager ]]; then
-    echo Cloning Dotfiles Manager
-    git clone https://github.com/rucker/dotfiles-manager.git
-  fi
-
+  # Create ~/bin if needed
   local home_bin=${HOME}/bin
   if [[ ! -d ${home_bin} ]]; then
-    echo Creating ${home_bin}
-    mkdir ${home_bin}
+    mkdir -p ${home_bin}
   fi
 
-  if [[ -z $(readlink ${DFM}) ]]; then
-    local dfm_link_target=${parent_dir}/dotfiles-manager/dotfilesmanager/dfm.py
-    echo "Linking ${DFM} -> ${dfm_link_target}"
-    ln -s ${dfm_link_target} ${DFM}
-  fi
-
+  # Create symlink for dotfiles wrapper (keep this)
   local dotfiles_link=${home_bin}/dotfiles
-  if [[ -z $(readlink ${dotfiles_link}) ]]; then
-    local dotfiles_link_target=${parent_dir}/dotfiles/${THIS_SCRIPT}
-    echo "Linking ${dotfiles_link} -> ${dotfiles_link_target}"
-    ln -s ${dotfiles_link_target} ${home_bin}/dotfiles
+  local dotfiles_link_target=$(realpath ${BASH_SOURCE[0]})
+  if [[ ! -e ${dotfiles_link} ]]; then
+    ln -s ${dotfiles_link_target} ${dotfiles_link}
+    echo "Created symlink: ${dotfiles_link} -> ${dotfiles_link_target}"
   fi
-
-  echo Installation complete
-
-  popd 2>&1 > /dev/null
-
-  _get_dfm_opts
 }
 
 _update_repo() {
@@ -175,7 +161,7 @@ _update_repo() {
 }
 
 _run_dfm() {
-  local DFM_CMD="${DFM} ${DOTFILES_SCRIPT_DIR}/src"
+  local DFM_CMD="dfm ${DOTFILES_SCRIPT_DIR}/src"
   local os_excludes
   if [[ $(uname) =~ "Linux" ]]; then
     os_excludes=(96-bashrc_win 98-bashrc_mac 96-bashrc_mac)
