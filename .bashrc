@@ -271,7 +271,7 @@ latest() {
   local ls_latest_opts=$(echo $LS_OPTIONS | sed 's,--group-directories-first,,')
 
   let idx=0
-  for dir in ${dirs[@]}; do
+  for dir in "${dirs[@]}"; do
     [[ ${idx} -gt 0 ]] && echo ""
     echo ${dir}:
     [[ $(file -h "${dir}") =~ 'symbolic link' ]] && dir="${dir}/"
