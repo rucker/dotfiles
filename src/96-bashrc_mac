@@ -1,3 +1,5 @@
 alias fixwifi="networksetup -setairportpower en0 off && networksetup -setairportpower en0 on"
 alias colorchooser="osascript -e 'choose color'"
+# Source: https://grok.com/share/c2hhcmQtMg_aa75daee-30e4-4361-9c82-ac3bf247c061
+alias python=python3
 eval `dircolors`
