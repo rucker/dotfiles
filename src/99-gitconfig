@@ -8,6 +8,8 @@
     co = checkout
     st = status
     br = branch
+    p = pull
+    f = fetch
     rbi = rebase -i
 	cl = git-clone
 	ls = show --stat --abbrev-commit
