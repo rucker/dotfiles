@@ -1,4 +1,5 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
+set -e
 
 declare -a ARGS
 declare DOTFILES_SCRIPT_DIR
@@ -101,12 +102,24 @@ EOF
     mkdir -p ${home_bin}
   fi
 
-  # Create symlink for dotfiles wrapper (keep this)
+  # Create symlink or wrapper for dotfiles command
   local dotfiles_link=${home_bin}/dotfiles
   local dotfiles_link_target=$(realpath ${BASH_SOURCE[0]})
+
   if [[ ! -e ${dotfiles_link} ]]; then
-    ln -s ${dotfiles_link_target} ${dotfiles_link}
-    echo "Created symlink: ${dotfiles_link} -> ${dotfiles_link_target}"
+    # On Windows, create a wrapper script instead of a symlink
+    # to avoid "bad interpreter" issues with Git Bash
+    if [[ $(uname) =~ "NT" || $(uname -s) =~ "MINGW" || $(uname -s) =~ "MSYS" ]]; then
+      cat > "${dotfiles_link}" <<-EOF
+	#!/usr/bin/env bash
+	exec "${dotfiles_link_target}" "\$@"
+	EOF
+      chmod +x "${dotfiles_link}"
+      echo "Created wrapper script: ${dotfiles_link} -> ${dotfiles_link_target}"
+    else
+      ln -s ${dotfiles_link_target} ${dotfiles_link}
+      echo "Created symlink: ${dotfiles_link} -> ${dotfiles_link_target}"
+    fi
   fi
 }
 
