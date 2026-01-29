@@ -114,7 +114,7 @@ nnoremap <c-k> <c-w><c-k>
 nnoremap <c-l> <c-w><c-l>
 nnoremap <c-h> <c-w><c-h>
 
-nnoremap <Leader>ve :vsplit $MYVIMRC<cr>
+nnoremap <Leader>ve :vsplit $MYIMRC<cr>
 nnoremap <Leader>vt :tabnew $MYVIMRC<cr>
 nnoremap <Leader>vs :source $MYVIMRC<cr>
 
@@ -160,6 +160,8 @@ autocmd BufEnter *bash*
 autocmd BufEnter * call SetTabs()
 autocmd BufEnter,FocusGained * silent! checktime
 autocmd CursorHold,CursorHoldI * silent! checktime
+
+command! Reverse execute 'g/^/m0' | nohlsearch
 
 if finddir("${HOME}/.vim/CamelCaseMotion") !=? ""
     call camelcasemotion#CreateMotionMappings('<leader>')
