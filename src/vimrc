@@ -161,6 +161,8 @@ autocmd BufEnter * call SetTabs()
 autocmd BufEnter,FocusGained * silent! checktime
 autocmd CursorHold,CursorHoldI * silent! checktime
 
+command! Reverse execute 'g/^/m0' | nohlsearch
+
 if finddir("${HOME}/.vim/CamelCaseMotion") !=? ""
     call camelcasemotion#CreateMotionMappings('<leader>')
 endif
