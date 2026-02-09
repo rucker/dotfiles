@@ -160,9 +160,12 @@ autocmd BufEnter *bash*
 autocmd BufEnter * call SetTabs()
 autocmd BufEnter,FocusGained * silent! checktime
 autocmd CursorHold,CursorHoldI * silent! checktime
+" Soft-wrap - don't display a page of '@' when long lines would fail to wrap
+autocmd FileType xml,html,json setlocal wrap linebreak nolist display=lastline
 
 command! Reverse execute 'g/^/m0' | nohlsearch
 
 if finddir("${HOME}/.vim/CamelCaseMotion") !=? ""
     call camelcasemotion#CreateMotionMappings('<leader>')
 endif
+
