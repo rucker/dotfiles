@@ -96,6 +96,30 @@ set background=dark
 if executable('ctags')
     set cscopetag
 endif
+
+" Common Emacs-like bindings in Insert mode
+inoremap <Esc>f <C-o>w
+inoremap <Esc>b <C-o>b
+" beginning of line
+inoremap <C-a> <C-o>^
+" end of line
+inoremap <C-e> <C-o>$
+" forward char
+inoremap <C-f> <C-o>l
+" backward char
+inoremap <C-b> <C-o>h
+" down (next line)
+inoremap <C-n> <C-o>j
+" up (previous line)
+inoremap <C-p> <C-o>k
+" forward delete char
+inoremap <C-d> <Delete>
+" Keeps plain Esc fast
+set timeout          " enable timeouts (default on)
+set timeoutlen=300   " wait 300 ms for mapped sequences like <Esc>f
+set ttimeout         " also timeout on key codes
+set ttimeoutlen=50   " very short for actual Esc → fast exit
+
 " search for visual selection with //
 vnoremap // y/<c-r>"<cr>
 imap jj <esc>
