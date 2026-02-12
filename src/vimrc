@@ -80,6 +80,7 @@ syntax on
 let mapleader=';'
 highlight LineNr ctermfg=red	" change color of line numbering so it's different than code font color
 set number
+set relativenumber
 set ruler
 set autoread					" reload file when modified on disk
 set ls=2						" always show status line
@@ -147,6 +148,12 @@ function SetTabs()
         set shiftwidth=4 tabstop=4 expandtab
     endif
 endfunction
+
+augroup numbertoggle
+  autocmd!
+  autocmd InsertLeave * set relativenumber
+  autocmd InsertEnter * set norelativenumber
+augroup END
 
 autocmd BufEnter *.py
     \ set autoindent |
