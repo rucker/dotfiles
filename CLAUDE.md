@@ -50,12 +50,12 @@ Custom bash functions defined:
 ./dotfiles.sh --install
 
 # Update dotfiles from repo to home directory (with automatic git pull)
-./dotfiles.sh --sync
+./dotfiles.sh
 
 # Update dotfiles without pulling latest changes
-./dotfiles.sh --sync --no-pull
+./dotfiles.sh --no-pull
 
-# Check which dotfiles would be updated
+# Check which dotfiles would be updated (dry run)
 ./dotfiles.sh --dry-run
 ```
 
@@ -79,7 +79,7 @@ The gitconfig defines these commonly-used aliases:
 When modifying dotfiles:
 1. Edit files in `src/` directory (never edit the root copies directly)
 2. For machine-specific config, create a `*_local` file (e.g., `src/95-bashrc_local`)
-3. Run `./dotfiles.sh --sync` to update both home directory and repo root
+3. Run `./dotfiles.sh --no-pull` to update both home directory and repo root
 4. Commit changes from the `src/` directory
 
 ## Configuration Details
