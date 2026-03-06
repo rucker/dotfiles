@@ -121,9 +121,9 @@ nnoremap <c-k> <c-w><c-k>
 nnoremap <c-l> <c-w><c-l>
 nnoremap <c-h> <c-w><c-h>
 
-nnoremap <Leader>ve :vsplit $MYVIMRC<cr>
-nnoremap <Leader>vt :tabnew $MYVIMRC<cr>
-nnoremap <Leader>vs :source $MYVIMRC<cr>
+nnoremap <Leader>rce :edit $MYVIMRC<cr>
+nnoremap <Leader>rct :tabnew $MYVIMRC<cr>
+nnoremap <Leader>rcs :source $MYVIMRC<cr>
 
 vmap Y "*y
 
