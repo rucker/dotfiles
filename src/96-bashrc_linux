@@ -1,4 +1,5 @@
 __do_alias "pbcopy" "xclip -selection c"
+__do_alias "bat" "batcat"
 alias gimme="sudo apt-get install"
 alias remove="sudo apt-get remove"
 export TMPDIR=/tmp
