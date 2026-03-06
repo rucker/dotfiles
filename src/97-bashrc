@@ -11,7 +11,7 @@ __tmux-attach() {
   [[ ! -z $SSH_CONNECTION ]] && return
   __running_in_docker && return
   ! __present tmux && return
-  [[ ! -z $TMUX_VERSION ]] && return
+  [[ -n $TMUX ]] && return
   local tmux_sessions=$(tmux list-sessions)
   if [[ -z ${tmux_sessions} ]]; then
     tmux
