@@ -16,7 +16,7 @@ __running_in_docker() {
 }
 
 __tmux-attach() {
-  [[ ! -z $SSH_CONNECTION ]] && return
+  [[ -n $SSH_CONNECTION ]] && return
   __running_in_docker && return
   ! __present tmux && return
   [[ -n $TMUX ]] && return
@@ -25,7 +25,7 @@ __tmux-attach() {
     tmux
   else
     echo -e "Existing tmux session(s) found:\n"
-    eval tmux list-sessions
+    tmux list-sessions
     echo -e "\nYou can attach to one of these sessions via:"
     echo tmux a -t target-session
   fi
@@ -118,7 +118,7 @@ git-clone() {
     git clone
   elif [[ $# -eq 1 ]]; then
     if git clone ${1}; then
-      dirname=$(echo ${1##*/} | sed 's,.git,,')
+      dirname=$(echo ${1##*/} | sed 's/\.git$//')
       echo cd ${dirname}
       cd ${dirname}
     fi
