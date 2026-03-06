@@ -137,41 +137,36 @@ augroup numbertoggle
   autocmd InsertEnter * set norelativenumber
 augroup END
 
-autocmd BufEnter *.py
-    \ set autoindent |
-    \ set fileformat=unix |
-
-autocmd BufEnter Jenkinsfile*
-    \ set syntax=groovy |
-
-autocmd BufEnter */playbooks/*.yml
-    \ set filetype=ansible
-
-autocmd BufEnter *.cake
-    \ set filetype=cs
-
-autocmd BufEnter *gitconfig*
-    \ set filetype=gitconfig
-
-autocmd BufEnter *.org
-    \ setlocal tw=0 |
-    \ setlocal noswapfile
-
-autocmd BufEnter *.gcode
-    \ set filetype=nc
-
-autocmd BufEnter *bash*
-    \ let b:is_bash=1
-
-autocmd BufEnter * call SetTabs()
-autocmd BufEnter,FocusGained * silent! checktime
-autocmd CursorHold,CursorHoldI * silent! checktime
-" Soft-wrap - don't display a page of '@' when long lines would fail to wrap
-autocmd FileType xml,html,json setlocal wrap linebreak nolist display=lastline
+augroup vimrc
+    autocmd!
+    autocmd BufEnter *.py
+        \ set autoindent |
+        \ set fileformat=unix |
+    autocmd BufEnter Jenkinsfile*
+        \ set syntax=groovy |
+    autocmd BufEnter */playbooks/*.yml
+        \ set filetype=ansible
+    autocmd BufEnter *.cake
+        \ set filetype=cs
+    autocmd BufEnter *gitconfig*
+        \ set filetype=gitconfig
+    autocmd BufEnter *.org
+        \ setlocal tw=0 |
+        \ setlocal noswapfile
+    autocmd BufEnter *.gcode
+        \ set filetype=nc
+    autocmd BufEnter *bash*
+        \ let b:is_bash=1
+    autocmd BufEnter * call SetTabs()
+    autocmd BufEnter,FocusGained * silent! checktime
+    autocmd CursorHold,CursorHoldI * silent! checktime
+    " Soft-wrap - don't display a page of '@' when long lines would fail to wrap
+    autocmd FileType xml,html,json setlocal wrap linebreak nolist display=lastline
+augroup END
 
 command! Reverse execute 'g/^/m0' | nohlsearch
 
-if finddir("${HOME}/.vim/CamelCaseMotion") !=? ""
+if finddir(expand("~/.vim/plugged/CamelCaseMotion")) !=? ""
     call camelcasemotion#CreateMotionMappings('<leader>')
 endif
 
