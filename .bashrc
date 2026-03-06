@@ -133,28 +133,6 @@ git-clone() {
   fi
 }
 
-git-push() {
-  local push_res=$(git push 2>&1)
-  echo
-  if [[ ${push_res} =~ "no upstream branch" ]]; then
-    local branch_name=$(git rev-parse --abbrev-ref HEAD)
-    local push_cmd="git push --set-upstream origin ${branch_name};"
-    if [[ $# -eq 1 && $(echo $1) == -[Yy] ]]; then
-      eval $push_cmd
-    else
-      printf '%s\n\n' "${push_res[@]}"
-      while true; do
-        read -p "Set upstream to origin/${branch_name} and push? [Y/N] " yn
-        case ${yn} in
-          [Yy]* ) echo; eval $push_cmd; break;;
-          [Nn]* ) echo Abort.; break;;
-          * ) echo Please enter Y or N
-        esac
-      done
-    fi
-  fi
-}
-
 up() {
   if [[ $# -eq 0 ]]; then
     cd ..
