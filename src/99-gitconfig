@@ -17,10 +17,16 @@
 	cm = commit -m
 	cam = commit -am
 	cane = commit --amend --no-edit
+	recent = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+	undo = reset HEAD~1 --mixed
+	today = log --since=midnight --oneline
 [push]
 	default = simple
+	autoSetupRemote = true
 [pull]
 	rebase = true
+[rerere]
+	enabled = true
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
