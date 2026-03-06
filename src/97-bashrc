@@ -1,24 +1,17 @@
 __present() {
-  command -v ${1} >/dev/null 2>&1
-  echo $?
+  command -v "${1}" >/dev/null 2>&1
 }
 
 # Begin auto start/attach tmux
 __running_in_docker() {
-  if [[ -f /proc/self/cgroup ]]; then
-    awk -F/ '$2 == "docker"' /proc/self/cgroup | read
-    if [[ $? -eq 0 ]]; then
-      echo true
-    else
-      echo false
-    fi
-  else
-    echo false
-  fi
+  [[ -f /proc/self/cgroup ]] && awk -F/ '$2 == "docker"' /proc/self/cgroup | read
 }
 
 __tmux-attach() {
-  [[ ! -z $SSH_CONNECTION || $(__running_in_docker) == "true" || $(__present tmux) -ne 0 || ! -z $TMUX_VERSION ]] && return
+  [[ ! -z $SSH_CONNECTION ]] && return
+  __running_in_docker && return
+  ! __present tmux && return
+  [[ ! -z $TMUX_VERSION ]] && return
   local tmux_sessions=$(tmux list-sessions)
   if [[ -z ${tmux_sessions} ]]; then
     tmux
@@ -61,7 +54,7 @@ __do_alias() {
     for prog in $(echo $2 | tr " " "\n"); do
         if [[ $prog == -* ]]; then
             continue
-        elif [[ $(__present ${prog}) -ne 0 ]]; then
+        elif ! __present ${prog}; then
             return
         fi
     done
@@ -85,7 +78,7 @@ __build_ps1() {
    local DEFAULT_COLOR="\[\033[00m\]"
    local TIMESTAMP="[\D{%Y-%m-%d} \t]"
 
-    $(__running_in_docker) -eq true && hostname="docker" || hostname="\h"
+    __running_in_docker && hostname="docker" || hostname="\h"
 
     PS1="$GO_TO_FIRST_COL$YELLOW$TIMESTAMP $GREEN_BOLD\u@$hostname$BLUE_BOLD \w"
     if [[ $(type -t __git_ps1) == 'function' ]]; then
