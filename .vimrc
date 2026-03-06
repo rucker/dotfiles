@@ -12,7 +12,8 @@ endif
 call plug#begin()
 
 Plug 'airblade/vim-gitgutter'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'pearofducks/ansible-vim'
 Plug 'bkad/CamelCaseMotion'
@@ -40,8 +41,9 @@ let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } } " Add your
 let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
 
-" CtrlP
-let g:ctrlp_max_files=0
+" fzf
+nnoremap <C-p> :Files<CR>
+nnoremap <leader>b :Buffers<CR>
 
 " vim-auto-save
 let g:auto_save = 1
@@ -74,7 +76,6 @@ set wildmenu					" horizontal menu for file autocomplete
 set splitright
 set splitbelow
 set backspace=indent,eol,start
-set shell=bash\ --login
 set background=dark
 if executable('ctags')
     set cscopetag
@@ -100,8 +101,7 @@ set ttimeoutlen=50   " very short for actual Esc → fast exit
 vnoremap // y/<c-r>"<cr>
 imap jj <esc>
 " toggle highlighting from search matches
-let hlstate = 0
-nmap <silent> <leader>n :if (hlstate == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=1-hlstate<cr>
+nmap <silent> <leader>n :set invhlsearch<cr>
 
 " Enable folding
 set foldmethod=indent
