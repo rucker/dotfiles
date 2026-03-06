@@ -1,4 +1,5 @@
 set nocompatible
+let mapleader=';'
 
 let vimpath = expand("~/.vim/")
 
@@ -61,7 +62,6 @@ if (has("persistent_undo"))
 endif
 
 syntax on
-let mapleader=';'
 highlight LineNr ctermfg=red	" change color of line numbering so it's different than code font color
 set number
 set relativenumber
@@ -106,9 +106,9 @@ set ttimeoutlen=50   " very short for actual Esc → fast exit
 
 " search for visual selection with //
 vnoremap // y/<c-r>"<cr>
-imap jj <esc>
+inoremap jj <esc>
 " toggle highlighting from search matches
-nmap <silent> <leader>n :set invhlsearch<cr>
+nnoremap <silent> <leader>n :set invhlsearch<cr>
 
 " Enable folding
 set foldmethod=indent
@@ -125,7 +125,7 @@ nnoremap <Leader>rce :edit $MYVIMRC<cr>
 nnoremap <Leader>rct :tabnew $MYVIMRC<cr>
 nnoremap <Leader>rcs :source $MYVIMRC<cr>
 
-vmap Y "*y
+vnoremap Y "*y
 
 function SetTabs()
     if &filetype == 'make' || &filetype == 'gitconfig'
