@@ -1,52 +1,34 @@
-set nocompatible              " be iMproved, required
+set nocompatible
 
 let vimpath = expand("~/.vim/")
 
-let vundlepath = vimpath . "bundle/Vundle.vim"
-if !isdirectory(vundlepath)
-    silent !echo "Vundle is not installed. Installing Vundle..."
-    call mkdir(vimpath . "bundle", "p")
-    silent !git clone https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/Vundle.vim
+" Auto-install vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-" set the runtime path to include Vundle and initialize
-execute 'set rtp+=' . vundlepath
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'pearofducks/ansible-vim'
-Plugin 'bkad/CamelCaseMotion'
-Plugin 'elixir-editors/vim-elixir'
+call plug#begin()
+
+Plug 'airblade/vim-gitgutter'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'pearofducks/ansible-vim'
+Plug 'bkad/CamelCaseMotion'
+Plug 'elixir-editors/vim-elixir'
 if executable('ctags')
-    Plugin 'ludovicchabant/vim-gutentags'
+    Plug 'ludovicchabant/vim-gutentags'
 endif
-Plugin 'jceb/vim-orgmode'
-Plugin 'tpope/vim-speeddating'
-Plugin 'zigford/vim-powershell'
-Plugin 'vim-scripts/nc.vim--Eno'
-Plugin 'vim-scripts/vim-auto-save'
-Plugin 'rucker/utl.vim'
+Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-speeddating'
+Plug 'zigford/vim-powershell'
+Plug 'vim-scripts/nc.vim--Eno'
+Plug 'vim-scripts/vim-auto-save'
+Plug 'rucker/utl.vim'
 
-" All of your Plugins must be added before the following line
-filetype off
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+call plug#end()
+filetype plugin indent on
 
 " Start Plugin Settings
 " NERD Commenter settings
