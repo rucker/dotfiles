@@ -20,6 +20,7 @@
 	recent = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
 	undo = reset HEAD~1 --mixed
 	today = log --since=midnight --oneline
+	sf = show --pretty=fuller
 [push]
 	default = simple
 	autoSetupRemote = true
