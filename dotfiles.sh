@@ -83,15 +83,11 @@ _check_dependencies() {
     cat <<'EOF'
 ERROR: 'dfm' command not found.
 
-Please install dotfiles-manager:
+Please install dotfiles-manager via pipx (recommended — survives Python upgrades):
   git clone https://github.com/rucker/dotfiles-manager.git
-  cd dotfiles-manager
-  python -m pip install --user -e .
+  pipx install ~/repos/dotfiles-manager
 
-This installs to ~/.local/bin/dfm (ensure ~/.local/bin is in your PATH)
-
-Or install from PyPI (when available):
-  python -m pip install --user dotfiles-manager
+Ensure ~/.local/bin is in your PATH.
 EOF
     exit 1
   fi

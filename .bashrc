@@ -280,7 +280,7 @@ elif [[ -f /usr/share/doc/fzf/examples/key-bindings.bash ]]; then
 fi
 __present fzf && export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
-export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.emacs.d/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export LESS_TERMCAP_mb=$(printf "\e[1;31m")
 export LESS_TERMCAP_md=$(printf "\e[1;31m")
 export LESS_TERMCAP_me=$(printf "\e[0m")
