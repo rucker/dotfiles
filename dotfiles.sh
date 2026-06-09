@@ -3,6 +3,7 @@ set -e
 
 declare -a ARGS
 declare DOTFILES_SCRIPT_DIR
+declare DFM_REPO_DIR
 NO_PULL=false
 THIS_SCRIPT=$(echo $(basename $([ -L $0 ] && readlink -f $0 || echo $0)))
 declare DFM_OPTS
@@ -25,9 +26,22 @@ main() {
   _set_opts "$@"
 
   DOTFILES_SCRIPT_DIR=$(realpath $(dirname $([ -L $0 ] && readlink -f $0 || echo $0)))
+  DFM_REPO_DIR=$(dirname ${DOTFILES_SCRIPT_DIR})/dotfiles-manager
   if [[ $NO_PULL = false ]]; then
     echo Updating dotfiles repo...
     _update_repo ${DOTFILES_SCRIPT_DIR}
+
+    if [[ -d ${DFM_REPO_DIR} ]]; then
+      echo Updating dotfiles-manager repo...
+      _update_repo ${DFM_REPO_DIR}
+      installed_version=$(dfm --version | awk '{print $2}')
+      repo_version=$(grep '^version' ${DFM_REPO_DIR}/pyproject.toml | sed 's/.*"\(.*\)".*/\1/')
+      if [[ ${installed_version} != ${repo_version} ]]; then
+        echo "Reinstalling dotfiles-manager (${installed_version} -> ${repo_version})..."
+        pipx install --force ${DFM_REPO_DIR}
+      fi
+    fi
+
     echo -e "Update complete. Running dfm \n"
   fi
 
@@ -122,7 +136,7 @@ EOF
 _update_repo() {
   pushd $1 &> /dev/null
   echo $1
-  if [[ -z $(git status --porcelain) ]]; then
+  if [[ -z $(git status --porcelain | grep -v '^??') ]]; then
     local commit_hash=$(git rev-parse HEAD)
     git pull
     if [[ $1 == ${DOTFILES_SCRIPT_DIR} && ${commit_hash} != $(git rev-parse HEAD) ]]; then
@@ -150,10 +164,13 @@ _update_repo() {
     while true; do
       case ${answer} in
         [Yy])
-          local pull_cmd="git stash && git pull && git stash pop"
-          echo -e "\n${pull_cmd}"
-          eval ${pull_cmd}
-          [[ $? -eq 0 ]] || return 1
+          echo -e "\ngit stash && git pull"
+          git stash && git pull
+          if ! git stash pop; then
+            echo -e "\nConflicts occurred applying stashed changes in $1."
+            echo "Resolve manually: cd $1 && git status"
+            return 1
+          fi
           break;;
         [Nn])
           echo Skipping pull
