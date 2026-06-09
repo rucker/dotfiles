@@ -12,8 +12,7 @@ Thumbs.db:encryptable
 .vscode
 
 # Other tooling
-.claude
-CLAUDE.md
+.claude/*.local.*
 
 # Custom stuff
 *.blend1
