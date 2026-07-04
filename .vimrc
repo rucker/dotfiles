@@ -125,7 +125,7 @@ nnoremap <Leader>rce :edit $MYVIMRC<cr>
 nnoremap <Leader>rct :tabnew $MYVIMRC<cr>
 nnoremap <Leader>rcs :source $MYVIMRC<cr>
 
-vnoremap Y "*y
+vnoremap Y "+y
 
 function SetTabs()
     if &filetype == 'make' || &filetype == 'gitconfig'
