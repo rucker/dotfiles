@@ -198,10 +198,12 @@ latest() {
   local dirs=()
   local results
   local opts
+  local nolimit=0
   local USAGE="Usage: latest [OPTION]... [DIR]... [NUMBER]\n"
   USAGE+="List most recently modified entries in DIR(s) (the current directory by default), "
   USAGE+="limited to NUMBER of results (10 by default).\n"
   USAGE+="  -a --all\tEquivalent to ls -A --almost-all\n"
+  USAGE+="  -n --no-limit\tRemove the default result limit (NUMBER still overrides)\n"
   USAGE+="  -h --help\tDisplay this help message"
 
   while [[ $# -gt 0 ]]; do
@@ -212,6 +214,10 @@ latest() {
         ;;
       -a|--all)
         opts+=A
+        shift
+        ;;
+      -n|--no-limit)
+        nolimit=1
         shift
         ;;
       *)
@@ -229,7 +235,7 @@ latest() {
     esac
   done
 
-  [[ -z ${results} ]] && results=11
+  [[ -z ${results} && ${nolimit} -eq 0 ]] && results=11
   [[ -z ${dirs} ]] && dirs+=('.')
 
   local idx=0
@@ -237,7 +243,11 @@ latest() {
     [[ ${idx} -gt 0 ]] && echo ""
     echo ${dir}:
     [[ $(file -h "${dir}") =~ 'symbolic link' ]] && dir="${dir}/"
-    ls -ltc${opts} "${dir}" | head -n ${results}
+    if [[ -n ${results} ]]; then
+      ls -ltc${opts} "${dir}" | head -n ${results}
+    else
+      ls -ltc${opts} "${dir}"
+    fi
     idx=$((idx + 1))
   done
 }
