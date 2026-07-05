@@ -194,7 +194,6 @@ mvcd() {
   mv "${file_args[@]}" "${dest}" && cd "${dest}"
 }
 
-# NOTE: Keep this function creation before aliasing of ls to use $LS_OPTIONS
 latest() {
   local dirs=()
   local results
@@ -233,15 +232,13 @@ latest() {
   [[ -z ${results} ]] && results=11
   [[ -z ${dirs} ]] && dirs+=('.')
 
-  local ls_latest_opts=$(echo $LS_OPTIONS | sed 's,--group-directories-first,,')
-
-  let idx=0
+  local idx=0
   for dir in "${dirs[@]}"; do
     [[ ${idx} -gt 0 ]] && echo ""
     echo ${dir}:
     [[ $(file -h "${dir}") =~ 'symbolic link' ]] && dir="${dir}/"
-    ls -ltc${opts} ${ls_latest_opts} "${dir}" | head -n ${results}
-    ((idx++))
+    ls -ltc${opts} "${dir}" | head -n ${results}
+    idx=$((idx + 1))
   done
 }
 
@@ -264,9 +261,34 @@ alias gu="git upd"
 alias gcm="git cm"
 alias gcam="git cam"
 alias gcane="git cane"
-alias ls="ls $LS_OPTIONS"
-alias ll="ls $LS_OPTIONS -l"
-alias l="ls $LS_OPTIONS -lA"
+# GNU ls silently drops -t/-c sort order within each group when
+# --group-directories-first is also given, so omit it whenever a time-based
+# sort is requested.
+__ls_opts() {
+  local opts=$LS_OPTIONS
+  local arg
+  for arg in "$@"; do
+    case $arg in
+      --) break ;;
+      --sort=time|--sort=ctime|--time=*)
+        opts=${opts/--group-directories-first/}
+        break
+        ;;
+      --*) ;;
+      -*)
+        if [[ ${arg#-} == *[tc]* ]]; then
+          opts=${opts/--group-directories-first/}
+          break
+        fi
+        ;;
+    esac
+  done
+  echo $opts
+}
+
+ls() { command ls $(__ls_opts "$@") "$@"; }
+ll() { command ls $(__ls_opts "$@") -l "$@"; }
+l() { command ls $(__ls_opts "$@") -lA "$@"; }
 alias resolution="mediainfo --Inform='Video;%Width%X%Height%'"
 alias diff="diff --color"
 __do_alias "cat" "grc cat"
