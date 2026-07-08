@@ -252,6 +252,10 @@ latest() {
   done
 }
 
+psport () {
+  lsof -i tcp:$1
+}
+
 umask 022
 
 alias grep="grep --color=auto"
