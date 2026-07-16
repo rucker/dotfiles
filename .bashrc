@@ -307,14 +307,10 @@ alias resolution="mediainfo --Inform='Video;%Width%X%Height%'"
 alias diff="diff --color"
 __do_alias "cat" "grc cat"
 
-if [[ -f ~/.fzf.bash ]]; then
-    source ~/.fzf.bash
-elif [[ -f /usr/share/doc/fzf/examples/key-bindings.bash ]]; then
-    source /usr/share/doc/fzf/examples/key-bindings.bash
-    [[ -f /usr/share/doc/fzf/examples/completion.bash ]] && \
-        source /usr/share/doc/fzf/examples/completion.bash
+if __present fzf; then
+    eval "$(fzf --bash)"
+    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 fi
-__present fzf && export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export LESS_TERMCAP_mb=$(printf "\e[1;31m")
