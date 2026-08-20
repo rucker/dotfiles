@@ -3,3 +3,4 @@ alias colorchooser="osascript -e 'choose color'"
 # Source: https://grok.com/share/c2hhcmQtMg_aa75daee-30e4-4361-9c82-ac3bf247c061
 alias python=python3
 eval `dircolors`
+alias fixkb="sudo launchctl kickstart -k system/org.pqrs.service.daemon.Karabiner-Core-Service && sudo launchctl kickstart -k system/org.pqrs.service.daemon.Karabiner-VirtualHIDDevice-Daemon"
