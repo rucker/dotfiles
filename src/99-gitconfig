@@ -21,6 +21,7 @@
 	undo = reset HEAD~1 --mixed
 	today = log --since=midnight --oneline
 	sf = show --pretty=fuller
+	changelog = "!f() { base=\"$1\"; if [ -z \"$base\" ]; then base=$(git reflog show \"$(git branch --show-current)\" 2>/dev/null | tail -1 | cut -d' ' -f1); fi; if [ -z \"$base\" ]; then echo 'changelog: could not determine branch point from reflog; pass a base explicitly, e.g. git changelog master' >&2; exit 1; fi; git log --reverse --pretty=format:'- %s' \"${base}..HEAD\"; }; f"
 [push]
 	default = simple
 	autoSetupRemote = true
