@@ -173,6 +173,14 @@ augroup END
 
 command! Reverse execute 'g/^/m0' | nohlsearch
 
+function! StripNbsp()
+    let l:pos = getpos('.')
+    silent! %s/\%u00a0//g
+    call setpos('.', l:pos)
+endfunction
+command! StripNbsp call StripNbsp()
+nnoremap <leader>nb :StripNbsp<cr>
+
 if finddir(expand("~/.vim/plugged/CamelCaseMotion")) !=? ""
     call camelcasemotion#CreateMotionMappings('<leader>')
 endif

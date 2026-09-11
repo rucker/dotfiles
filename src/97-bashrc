@@ -186,6 +186,25 @@ mvcd() {
   mv "${file_args[@]}" "${dest}" && cd "${dest}"
 }
 
+strip-nbsp() {
+  local paste copy
+
+  if __present pbpaste && __present pbcopy; then
+    paste=pbpaste; copy=pbcopy
+  elif __present xclip; then
+    paste="xclip -selection clipboard -o"; copy="xclip -selection clipboard -i"
+  elif __present xsel; then
+    paste="xsel --clipboard --output"; copy="xsel --clipboard --input"
+  elif __present wl-paste && __present wl-copy; then
+    paste=wl-paste; copy=wl-copy
+  else
+    >&2 echo "strip-nbsp: no clipboard tool found (pbpaste/pbcopy, xclip, xsel, or wl-clipboard)"
+    return 1
+  fi
+
+  ${paste} | tr -d '\302\240' | ${copy}
+}
+
 latest() {
   local dirs=()
   local results
