@@ -194,9 +194,7 @@ mvcd() {
   mv "${file_args[@]}" "${dest}" && cd "${dest}"
 }
 
-strip-nbsp() {
-  local paste copy
-
+__clipboard_cmds() {
   if __present pbpaste && __present pbcopy; then
     paste=pbpaste; copy=pbcopy
   elif __present xclip; then
@@ -206,11 +204,21 @@ strip-nbsp() {
   elif __present wl-paste && __present wl-copy; then
     paste=wl-paste; copy=wl-copy
   else
-    >&2 echo "strip-nbsp: no clipboard tool found (pbpaste/pbcopy, xclip, xsel, or wl-clipboard)"
+    >&2 echo "${1}: no clipboard tool found (pbpaste/pbcopy, xclip, xsel, or wl-clipboard)"
     return 1
   fi
+}
 
+strip-nbsp() {
+  local paste copy
+  __clipboard_cmds "strip-nbsp" || return 1
   ${paste} | tr -d '\302\240' | ${copy}
+}
+
+nbsp-to-backtick() {
+  local paste copy
+  __clipboard_cmds "nbsp-to-backtick" || return 1
+  ${paste} | sed "s/$(printf '\302\240')/\`/g" | ${copy}
 }
 
 latest() {

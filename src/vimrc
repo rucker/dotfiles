@@ -181,6 +181,14 @@ endfunction
 command! StripNbsp call StripNbsp()
 nnoremap <leader>nb :StripNbsp<cr>
 
+function! NbspToBacktick()
+    let l:pos = getpos('.')
+    silent! %s/\%u00a0/`/g
+    call setpos('.', l:pos)
+endfunction
+command! NbspToBacktick call NbspToBacktick()
+nnoremap <leader>nt :NbspToBacktick<cr>
+
 if finddir(expand("~/.vim/plugged/CamelCaseMotion")) !=? ""
     call camelcasemotion#CreateMotionMappings('<leader>')
 endif
