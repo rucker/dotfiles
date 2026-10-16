@@ -49,6 +49,12 @@ nnoremap <leader>b :Buffers<CR>
 " vim-auto-save
 let g:auto_save = 1
 
+" gutentags
+if executable('ctags')
+    let g:gutentags_ctags_exclude = ['target', '*.min.js', '*.min.css', '*/static/js/libraries/*', 'tags', 'tags.*']
+    let g:gutentags_ctags_extra_args = ['--excmd=number']
+endif
+
 " End Plugin Settings
 
 if (has("persistent_undo"))
@@ -192,4 +198,3 @@ nnoremap <leader>nt :NbspToBacktick<cr>
 if finddir(expand("~/.vim/plugged/CamelCaseMotion")) !=? ""
     call camelcasemotion#CreateMotionMappings('<leader>')
 endif
-
