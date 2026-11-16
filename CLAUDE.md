@@ -16,6 +16,7 @@ The repository uses a custom wrapper script (`dotfiles.sh`) around the Dotfiles 
 2. **OS-Specific Files**: Files with `_linux`, `_mac`, or `_win` suffixes are conditionally excluded based on the OS
 3. **Local Overrides**: Files ending in `_local` are excluded from repository updates and can be used for machine-specific configurations
 4. **Compilation**: The wrapper script compiles dotfiles from `src/` to both `$HOME` (as symlinks) and the repo root (as copies for version control)
+5. **Nested Files**: Top-level dirs in `src/` are installed hidden, e.g. `src/config/git/ignore` → `~/.config/git/ignore`, `src/doom.d/init.el` → `~/.doom.d/init.el`. Requires dotfiles-manager ≥ 6.0.0
 
 ### File Organization
 
@@ -99,7 +100,7 @@ When modifying dotfiles:
 - Default editor: vim
 - Default merge tool: vimdiff with diff3 conflict style
 - Pull strategy: rebase
-- Global gitexclude: `~/.gitexclude`
+- Global ignore and attributes files: git's default locations `~/.config/git/ignore` and `~/.config/git/attributes` (from `src/config/git/`), so no `core.excludesfile`/`core.attributesfile` is set
 - Pager: `less -F` (auto-exit if one screen)
 
 ### Important Patterns

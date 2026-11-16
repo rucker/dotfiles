@@ -13,6 +13,7 @@ Thumbs.db:encryptable
 
 # Other tooling
 .claude/*.local.*
+**/.claude/settings.local.json
 
 # Custom stuff
 *.blend1
