@@ -1,0 +1,5 @@
+# Global git attributes (core.attributesfile)
+
+# FreeCAD project files are zip archives; diff the model XML inside instead.
+*.fcstd diff=fcstd
+*.FCStd diff=fcstd

@@ -36,5 +36,7 @@
 	keepBackup = false
 [diff]
 	wsErrorHighlight = old,new
+[diff "fcstd"]
+	textconv = "sh -c 'unzip -p \"$0\" Document.xml GuiDocument.xml'"
 [user]
 	name = Rick Ucker

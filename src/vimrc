@@ -168,6 +168,9 @@ augroup vimrc
         \ setlocal noswapfile
     autocmd BufEnter *.gcode
         \ set filetype=nc
+    " FreeCAD project files (and backups) are zip archives
+    autocmd BufReadCmd *.fcstd,*.FCStd,*.FCBak
+        \ call zip#Browse(expand('<amatch>'))
     autocmd BufEnter *bash*
         \ let b:is_bash=1
     autocmd BufEnter * call SetTabs()
